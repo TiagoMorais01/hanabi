@@ -1,0 +1,23 @@
+typedef struct card* Card;
+typedef struct deck* Deck;
+
+Card newCard();
+Card copyCard(Card, int);
+Card getCa(Deck, int);
+Deck newDeck();
+int checkNum(int, int[], int);
+int checkChar(char, char[], int);
+int getCnum(Card);
+int getCpos(Card);
+int getCvc(Card);
+int getCvn(Card);
+char getCc(Card);
+void setAllVisCC(Card);
+void setAllVisNC(Card);
+void DeckNull(Deck, int);
+void shuffleDeck(Card*, int);
+void createDeck(Deck);
+void ConsCard(int, Card, char, int);
+void giveTipN(Card*, int);
+void giveTipC(Card*, char);
+void printCards(Deck);
