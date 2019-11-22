@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = 
-TARGET = test
+TARGET = hanabi
 
 # $(wildcard *.c /xxx/xxx/*.c): get all .cpp files from the current directory and dir "/xxx/xxx/"
 SRCS := $(wildcard *.c)

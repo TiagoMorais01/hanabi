@@ -40,9 +40,11 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, 
                     while (mov >= 0 && mov <= 2){
                         if(mov == 1){
                             selNum(ai, play);
+                            break;
                         }
                         else if(mov == 2){
                             selCor(ai, play);
+                            break;
                         }
                         else if(mov == 0){
                             break;
