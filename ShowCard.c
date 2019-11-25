@@ -146,9 +146,9 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tip
     }
     
     gotoxy((w/5-15),3);
-    printf("%lc", 0x2661);
+    printf("%lc", 0x2764);
     for(i = 1;i < lives; i++)
-        printf(" %lc", 0x2661);
+        printf(" %lc", 0x2764);
 
     //mao Gervásio
     setColor(getCc(getCard(ai, 0)));
