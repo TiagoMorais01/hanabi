@@ -107,7 +107,7 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
-void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips , int nc){
+void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips , int nc, int nt){
 
     int w, h;
     int col,row;
@@ -120,7 +120,7 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tip
         w = csbi.dwSize.X;
     //senao e linux/mac
     #else
-        //system("clear");
+        system("clear");
         struct winsize size;
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
         w = size.ws_col;
@@ -177,20 +177,32 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tip
     //setAllVisCP(jog);
     //setAllVisNP(jog);
     
-    for (i = 0; i < 13; i++){
-        if(i % 2 == 0)
-            ConsCard((rand() % 10) + 1, getCdeck(trash, i), 'R', i);
-        else 
-            ConsCard((rand() % 10) + 1, getCdeck(trash, i), 'B', i);
-        
+    while (nt < 13){
+        gototrash(deck, trash, getCa(deck, nt+1), nt++, nc--);
     }
-    
 
-    for(i = 0 ; i < 50 ; i++){
+    sortTrash(trash, 0, nt - 1);
+
+    char p;
+    int k = 0, l = 0, m = 0;
+
+    for(i = 0 ; i < nt ; i++, l++){
         Card c = getCa(trash, i+1);
+        
+        if (i == 0){
+            p = getCc(c);
+        }
+        else if(p != getCc(c)){
+            k++;
+            l = 0;
+            m++;
+            p = getCc(c);
+        }
+
+        
         if(c != NULL){
             setColor(getCc(c));
-            drawTrash(i*4, 4, c);
+            drawTrash(l*3+1, 4+k*3+1-m, c);
         }
         else
             break;

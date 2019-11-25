@@ -3,7 +3,6 @@ typedef struct deck* Deck;
 
 Card newCard();
 Card copyCard(Card, int);
-Card getCdeck(Deck, int);
 Card getCa(Deck, int);
 Deck newDeck();
 int checkNum(int, int[], int);
@@ -22,4 +21,7 @@ void ConsCard(int, Card, char, int);
 void giveTipN(Card*, int);
 void giveTipC(Card*, char);
 void printCards(Deck);
-void gototrash(Card, int);
+void gototrash(Deck, Deck, Card, int, int);
+void swapT(Card *xp, Card *yp);
+int partitionT(Card *c, int low, int high);
+void sortTrash(Deck t, int low, int nt);

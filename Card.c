@@ -25,11 +25,6 @@ Card copyCard(Card c, int i){
     return c;
 }
 
-Card getCdeck(Deck d, int n) {
-    printf("oasd\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    return d->deck[n];
-}
-
 Card getCa(Deck d, int nc){
     return d->deck[nc-1];
 }
@@ -194,6 +189,48 @@ void printCards(Deck d) {
 
 }
 
-void gototrash(Card c, int n) {
+void gototrash(Deck d, Deck t, Card c, int n, int nc) {
     c->pos = n;
+    d->deck[nc-1] = NULL;
+    t->deck[n] = c;
+}
+
+void swapT(Card *xp, Card *yp){
+    Card temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+int partitionT(Card *c, int low, int high){
+    // pivot (Element to be placed at right position)
+    char pivotC = c[high]->color;
+    int pivotI = c[high]->num;
+ 
+    int i = (low - 1);  // Index of smaller element
+    int j = 0;
+    for (j = low; j <= high - 1; j++){
+        // If current element is smaller than the pivot
+        if (c[j]->color < pivotC){
+            i++;    // increment index of smaller element
+            swapT(&c[i], &c[j]);
+        }
+        else if((c[j]->color == pivotC) && (c[j]->num <= pivotI)){
+            i++;    // increment index of smaller element
+            swapT(&c[i], &c[j]);
+        }
+        
+    }
+    swapT(&c[i + 1], &c[high]);
+    return (i + 1);
+}
+
+void sortTrash(Deck t, int low, int nt){
+    if (low < nt){
+        /* pi is partitioning index, arr[pi] is now
+        at right place */
+        int pi = partitionT(t->deck, low, nt);
+
+        sortTrash(t, low, pi - 1);  // Before pi
+        sortTrash(t, pi + 1, nt); // After pi
+    }
 }
