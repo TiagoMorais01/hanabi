@@ -25,6 +25,11 @@ Card copyCard(Card c, int i){
     return c;
 }
 
+Card getCdeck(Deck d, int n) {
+    printf("oasd\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    return d->deck[n];
+}
+
 Card getCa(Deck d, int nc){
     return d->deck[nc-1];
 }
@@ -186,5 +191,9 @@ void printCards(Deck d) {
     for (i = 0; i < 50; i++) {
         printf("NUM: %d - COR: %c - POS: %d\n", d->deck[i]->num, d->deck[i]->color, d->deck[i]->pos);
     }
-    
+
+}
+
+void gototrash(Card c, int n) {
+    c->pos = n;
 }

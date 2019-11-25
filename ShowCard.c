@@ -120,7 +120,7 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tip
         w = csbi.dwSize.X;
     //senao e linux/mac
     #else
-        system("clear");
+        //system("clear");
         struct winsize size;
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
         w = size.ws_col;
@@ -176,8 +176,12 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tip
     
     //setAllVisCP(jog);
     //setAllVisNP(jog);
-
+    
     for (i = 0; i < 13; i++){
+        if(i % 2 == 0)
+            ConsCard((rand() % 10) + 1, getCdeck(trash, i), 'R', i);
+        else 
+            ConsCard((rand() % 10) + 1, getCdeck(trash, i), 'B', i);
         
     }
     
