@@ -12,7 +12,7 @@
 #include "player.h"
 #include "ShowCard.h"
 
-void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, int nc, int nt){
+void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, int nc, int nt, int np){
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
         system("cls");
     #else
@@ -22,7 +22,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, 
     dealCards(jog, ai, deck, &nc);
     printCp(jog);
     printCp(ai);
-    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt);
+    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
     time_t t;
     srand((unsigned) time(&t));
     int play = rand() % 2;
@@ -55,15 +55,15 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, 
                         printf("Deseja indicar uma cor ou um numero?\n1 - Numero\n2 - Cor\n0 - Voltar para tras\n-> ");
                         scanf("%d", &mov);
                     }
-                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt);
+                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
                     break;
                 case 2:
                     //do some code
-                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt);
+                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
                     break;
                 case 3:
                     //do some code
-                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt);
+                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
                     break;
                 case 0:
                     r = 0;
@@ -101,11 +101,13 @@ void main(){
     Deck trash = NULL;
     Player ai = NULL;
     Player jog = NULL;
+    Card pilha[25];
     int lives = 3;
     int tips = 8;
     int nc = 50;
     int nt = 0;
-    
+    int np = 0;
+
     int c, d, run = 1;
 
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -126,11 +128,13 @@ void main(){
                 jog = newPlayer(no);
                 deck = newDeck();
                 trash = newDeck();
-                newGame(deck, trash, ai, jog, lives, tips, nc, nt);
+                newPilha(pilha);
+                newGame(deck, trash, ai, jog, lives, tips, nc, nt, np);
                 free(deck);
                 free(trash);
                 freeP(ai);
                 freeP(jog);
+                freePi(pilha);
                 break;
             case 2:
                 tutorial();

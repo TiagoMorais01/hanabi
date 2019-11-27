@@ -250,3 +250,17 @@ void sortTrash(Deck t, int low, int nt){
         sortTrash(t, pi + 1, nt); // After pi
     }
 }
+
+void freePi(Card *c){
+    int i = 0;
+    for(i = 0; i < 25; i++){
+        if(c[i] != NULL)
+            free(c[i]);
+    }
+}
+
+void newPilha(Card *pi){
+    int i = 0;
+    for(i = 0 ; i < 25 ; i++)
+        pi[i] = NULL;
+}

@@ -107,7 +107,7 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
-void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips , int nc, int nt){
+void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips , int nc, int nt, int np){
 
     int w, h;
     int col,row;
