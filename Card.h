@@ -5,7 +5,7 @@ Card newCard();
 Card copyCard(Card, int);
 Card getCa(Deck, int);
 Deck newDeck();
-int checkNum(int, int[], int);
+int checkNum(char, int[], int);
 int checkChar(char, char[], int);
 int getCnum(Card);
 int getCpos(Card);

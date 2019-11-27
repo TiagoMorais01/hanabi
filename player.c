@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
 #include "Card.h"
 #include "player.h"
@@ -108,9 +109,9 @@ void selNum(Player p, int play){
     int i = 0;
     int arr[5];
     int j = 0;
-    int val = 0;
+    char val = 0;
     for (i = 0; i < 5; i++){
-        if(checkNum(getCnum(p->cards[i]), arr, j) || i == 0){
+        if(checkNum( ( (char) getCnum(p->cards[i])+48 ), arr, j ) || i == 0){
             arr[j] = getCnum(p->cards[i]);
             j++;
         }
@@ -123,23 +124,26 @@ void selNum(Player p, int play){
     for (i = 1; i < j; i++){
         printf(" %d", arr[i]);
     }
+    printf("\n0 - Voltar para o menu");
     printf("\n->");
-    scanf("%d", &val);
+    while (getchar()!='\n');
+    scanf("%c", &val);
 
-    while (checkNum(val, arr, j)){
+    while ((checkNum(val, arr, j))){
+        
         printf("Esse numero não existe!!!\n");
         printf("Qual e o numero que quer indicar?\n");
         printf("Numero: %d", arr[0]);
         for (i = 1; i < j; i++){
             printf(" %d", arr[i]);
         }
+        printf("\n0 - Voltar para o menu");
         printf("\n->");
-        fflush(stdin);
-        scanf("%d", &val);
+        while (getchar()!='\n');
+        scanf("%c", &val);
     }
     
-
-    giveTipN(p->cards, val);
+    giveTipN(p->cards, ((int)val)-48);
 }
 
 void selCor(Player p, int play){
@@ -157,22 +161,24 @@ void selCor(Player p, int play){
     }
 
     //perguntar qual é a cor que o utilizador deseja indicar
-    printf("Qual e o numero que quer indicar?\n");
+    printf("Qual e o cor que quer indicar?\n");
     printf("Cor: %c", arr[0]);
     for (i = 1; i < j; i++){
         printf(" %c", arr[i]);
     }
+    printf("\n0 - Voltar para o menu");
     printf("\n->");
     fflush(stdin);
     scanf("%s", &val);
     
     while (checkChar(val, arr, j)){
         printf("Essa cor não existe!!!\n");
-        printf("Qual e o numero que quer indicar?\n");
+        printf("Qual e o cor que quer indicar?\n");
         printf("Cor: %c", arr[0]);
         for (i = 1; i < j; i++){
             printf(" %c", arr[i]);
         }
+        printf("\n0 - Voltar para o menu");
         printf("\n->");
         fflush(stdin);
         scanf("%s", &val);

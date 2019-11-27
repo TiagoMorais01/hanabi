@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <time.h>
 #include "Card.h"
 
@@ -38,25 +39,40 @@ Deck newDeck(){
     return d;
 }
 
-int checkNum(int val, int arr[], int n){
-    int i = 0;
+int checkNum(char val, int arr[], int n){
+    
     int v = 1;
-    for (i = 0; i < n; i++){
-        if(val == arr[i]){
+    if (isdigit(val)){
+        if (((int)val - 48) == 0 )
             v = 0;
-            break;
+        else{
+            int i = 0;
+            for (i = 0; i < n; i++){
+                if(( (int)val - 48) == arr[i]){
+                    v = 0;
+                    break;
+                }
+            }
         }
     }
+    else
+        v = 1;
+    
     return v;
 }
 
 int checkChar(char c, char arr[], int n){
-    int i = 0;
     int v = 1;
-    for (i = 0; i < n; i++){
-        if(c == arr[i]){
-            v = 0;
-            break;
+    if (isdigit(c) && ((int)c - 48) == 0)
+        v = 0;
+    else{
+        int i = 0;
+        c = toupper(c);
+        for (i = 0; i < n; i++){
+            if(c == arr[i]){
+                v = 0;
+                break;
+            }
         }
     }
     return v;
