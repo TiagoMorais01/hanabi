@@ -17,6 +17,10 @@ struct deck {
     Card deck[50];
 };
 
+struct pilha {
+    Card pilha[25];
+};
+
 Card newCard(){
     return (Card) malloc(sizeof(struct card));
 }
@@ -37,6 +41,15 @@ Deck newDeck(){
         d->deck[i] = NULL;
     }
     return d;
+}
+
+Pilha newPilha(){
+    int i = 0;
+    Pilha p = (Pilha) malloc(sizeof(struct pilha) * 1);
+    for(i = 0; i < 25; i++) {
+        p->pilha[i] = NULL;
+    }
+    return p;
 }
 
 int checkNum(char val, int arr[], int n){
@@ -268,10 +281,4 @@ void freePi(Card *c){
         if(c[i] != NULL)
             free(c[i]);
     }
-}
-
-void newPilha(Card *pi){
-    int i = 0;
-    for(i = 0 ; i < 25 ; i++)
-        pi[i] = NULL;
 }

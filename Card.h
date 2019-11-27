@@ -1,10 +1,12 @@
 typedef struct card* Card;
 typedef struct deck* Deck;
+typedef struct pilha* Pilha;
 
 Card newCard();
 Card copyCard(Card, int);
 Card getCa(Deck, int);
 Deck newDeck();
+Pilha newPilha();
 int checkNum(char, int[], int);
 int checkChar(char, char[], int);
 int getCnum(Card);
@@ -27,4 +29,3 @@ int partitionT(Card *, int , int );
 void sortTrash(Deck , int , int );
 void sortPilha(Card *, int , int );
 void freePi(Card *);
-void newPilha(Card *);
