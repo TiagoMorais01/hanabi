@@ -12,7 +12,7 @@
 #include "player.h"
 #include "ShowCard.h"
 
-void newGame(Deck deck, Deck trash, Player ai, Player jog, Card pi, int lives, int tips, int nc, int nt, int np)
+void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np)
 {
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
     system("cls");

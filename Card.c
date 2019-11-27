@@ -34,6 +34,10 @@ Card getCa(Deck d, int nc){
     return d->deck[nc-1];
 }
 
+Card getPilha(Pilha p, int np){
+    return p->pilha[np];
+}
+
 Deck newDeck(){
     int i = 0;
     Deck d = (Deck) malloc(sizeof(struct deck) * 1);
@@ -264,21 +268,22 @@ void sortTrash(Deck t, int low, int nt){
     }
 }
 
-void sortPilha(Card *pilha, int low, int np){
+void sortPilha(Pilha pilha, int low, int np){
     if (low < np){
         /* pi is partitioning index, arr[pi] is now
         at right place */
-        int pi = partitionT(pilha, low, np);
+        int pi = partitionT(pilha->pilha, low, np);
 
         sortPilha(pilha, low, pi - 1);  // Before pi
         sortPilha(pilha, pi + 1, np); // After pi
     }
 }
 
-void freePi(Card *c){
+void freePi(Pilha p){
     int i = 0;
     for(i = 0; i < 25; i++){
-        if(c[i] != NULL)
-            free(c[i]);
+        if(p->pilha[i] != NULL)
+            free(p->pilha[i]);
     }
+    free(p);
 }
