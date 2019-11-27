@@ -107,7 +107,7 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
-void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips , int nc, int nt, int np){
+void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Card pi, int lives, int tips , int nc, int nt, int np){
 
     int w, h;
     int col,row;
@@ -162,7 +162,13 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tip
     setColor(getCc(getCard(ai, 4)));
     drawCard((w/2)+20, 2, getCnum(getCard(ai, 4)));
 
-    //jogo
+    //jogo  
+    sortPilha(pi, 0, np - 1);
+    int ac = 0;
+    char cores = {'B','G','R','W','Y'};
+    for(i = 0 ; i < np ;i++){
+        if(cores[ac] == getCc(*pi[i]))
+    }
     setColor('B');
     drawCard((w/2)-6*2, 6, 0);
     setColor('G');
@@ -174,6 +180,7 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, int lives, int tip
     setColor('Y');
     drawCard((w/2)+20, 6, 0);
     
+
     //setAllVisCP(jog);
     //setAllVisNP(jog);
     

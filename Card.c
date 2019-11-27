@@ -251,6 +251,17 @@ void sortTrash(Deck t, int low, int nt){
     }
 }
 
+void sortPilha(Card *pilha, int low, int np){
+    if (low < np){
+        /* pi is partitioning index, arr[pi] is now
+        at right place */
+        int pi = partitionT(pilha, low, np);
+
+        sortPilha(pilha, low, pi - 1);  // Before pi
+        sortPilha(pilha, pi + 1, np); // After pi
+    }
+}
+
 void freePi(Card *c){
     int i = 0;
     for(i = 0; i < 25; i++){

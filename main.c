@@ -12,7 +12,7 @@
 #include "player.h"
 #include "ShowCard.h"
 
-void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, int nc, int nt, int np){
+void newGame(Deck deck, Deck trash, Player ai, Player jog, Card *pi, int lives, int tips, int nc, int nt, int np){
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
         system("cls");
     #else
@@ -22,7 +22,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, 
     dealCards(jog, ai, deck, &nc);
     printCp(jog);
     printCp(ai);
-    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
+    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
     time_t t;
     srand((unsigned) time(&t));
     int play = rand() % 2;
@@ -55,15 +55,15 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, int lives, int tips, 
                         printf("Deseja indicar uma cor ou um numero?\n1 - Numero\n2 - Cor\n0 - Voltar para tras\n-> ");
                         scanf("%d", &mov);
                     }
-                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
+                    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
                     break;
                 case 2:
                     //do some code
-                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
+                    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
                     break;
                 case 3:
                     //do some code
-                    ShowCardAI(deck, trash, ai, jog, lives, tips, nc, nt, np);
+                    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
                     break;
                 case 0:
                     r = 0;
@@ -129,7 +129,7 @@ void main(){
                 deck = newDeck();
                 trash = newDeck();
                 newPilha(pilha);
-                newGame(deck, trash, ai, jog, lives, tips, nc, nt, np);
+                newGame(deck, trash, ai, jog, pilha, lives, tips, nc, nt, np);
                 free(deck);
                 free(trash);
                 freeP(ai);

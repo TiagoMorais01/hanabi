@@ -25,5 +25,6 @@ void gototrash(Deck, Deck, Card, int, int);
 void swapT(Card *, Card *);
 int partitionT(Card *, int , int );
 void sortTrash(Deck , int , int );
+void sortPilha(Card *, int , int );
 void freePi(Card *);
 void newPilha(Card *);
