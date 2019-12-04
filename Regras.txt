@@ -1,0 +1,42 @@
+Regras:
+Neste jogo temos 3 opções :
+
+	Jogar uma Carta:
+
+		Ao jogar uma carta se esta for a correta vai para o montinho que lhe pertence por cores se esta não for jogada corretamente a carta vai para o lixo e os jogadores perdem uma vida.
+
+	Discartar uma Carta:
+
+		O jogador joga uma carta da sua mão e descarta a mesma voltada para cima para o monte do descarte. Em compensação pode recuperar uma pista.
+
+	Dar um dica:
+
+		O jogador dá uma dica ao outro sobre as cartas que este jogador tem na mão: As pistas podem ser dadas por números ou cores, sendo assim tira-se uma pista.
+
+
+	O jogo começa com 3 vidas e 8 pistas. 
+
+Objetivo:
+
+	O objetivo deste jogo é cooperar com um Bot para criar sets de cinco cartas ordenadas e sequências do um ao cinco, em cada uma das cinco cores.
+
+Conclusão do jogo:
+
+	O jogo pode terminar de três maneiras diferentes:
+
+		– Se a terceira ficha vermelha de penalidade for utilizada, os jogadores perdem imediatamente o jogo e marcam zero pontos.
+
+		– Se os jogadores completarem todas as cinco cores de fogo-de-artifício, o jogo acaba imediatamente e obtêm a pontuação máxima de 25 pontos.
+
+		– Quando a última carta é biscada, cada jogador joga mais uma vez (incluindo o jogador que biscou a última carta) e depois o jogo acaba.
+
+	A pontuação final é marcada com base nos diversos fogos-de-artifício jogados, sendo que a pontuação de cada fogo-de-artifício é igual ao valor da última carta jogada por fogos-de-artifício.
+
+	A pontuação final deve depois ser avaliada da seguinte forma:
+
+		0-5 Horrível! A multidão está furiosa.
+		6-10 Muito mau. Quase sem aplausos.
+		11-15 Desempenho honroso, mas não será lembrado.
+		16-20 Excelente! A multidão está encantada.
+		21-24 Extraordinário! Vai ficar gravado na memória da multidão.
+		25 Lendário! A multidão ficou estupefacta.

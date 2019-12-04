@@ -205,7 +205,18 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
 }
 
 void tutorial(){
-    
+    FILE *regras;
+    if(!(regras = fopen("Regras.txt","r")))
+        printf("Erro ao abrir o ficheiro");
+    else{
+        char *ch = malloc(200);
+        size_t t = 200;
+        while(getline(&ch, &t, regras) != -1){
+            printf("%s",ch);
+        }
+        printf("\n\nInsira qualquer tecla para continuar...");
+        while(getchar() != '\n');
+    }
     return;
 }
 
@@ -299,6 +310,7 @@ void main(){
                 break;
             case '2':
                 tutorial();
+                system("clear");
                 break;
             case '0':
                 run = 0;
