@@ -12,6 +12,7 @@
 #include "Card.h"
 #include "player.h"
 #include "ShowCard.h"
+#define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
 void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -100,10 +101,13 @@ void tutorial(){
     return;
 }
 
-void credits(){
+void credits(int w, int h){
     setlocale(LC_ALL, "");
+    gotoxy((w/2) - 20,1);
     printf("                         _  ___            Produzido por:\n");
+    gotoxy((w/2) - 20,2);
     printf("%lc__%lc  %lc__%lc  %lc%lc %lc  %lc__%lc  |_)  %lc              Tiago Morais 71395\n", 0x2502, 0x2502,  0x2571, 0x2572, 0x2502, 0x2572, 0x2502, 0x2571, 0x2572, 0x2502);
+    gotoxy((w/2) - 20,3);
     printf("%lc  %lc %lc    %lc %lc %lc%lc %lc    %lc |_) _%lc_             Tomas Silva 70680\n", 0x2502, 0x2502, 0x2571, 0x2572, 0x2502, 0x2572, 0x2502, 0x2571, 0x2572, 0x2502);
     return;
 }
@@ -121,24 +125,53 @@ void main(){
     int nc = 50;
     int nt = 0;
     int np = 0;
+    int h, w;
 
     int c, d, run = 1;
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-    system("cls");
-#else
-    //system("clear");
-#endif
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+        //system("cls");
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        row = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+        w = csbi.dwSize.X;
+    //senao e linux/mac
+    #else
+        system("clear");
+        struct winsize size;
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
+        w = size.ws_col;
+        h = size.ws_row;
+    #endif
 
     while (run){
-        credits();
-        printf("\n\n1 - New Game\n2 - Tutorial\n0 - Sair\n-> ");
+        credits(w, h);
+        printf("\n\n");
+        gotoxy((w/2) - 13,4);
+        printf("1 - New Game");
+        printf("\n");
+        gotoxy((w/2) - 13,5);
+        printf("2 - Tutorial");
+        printf("\n");
+        gotoxy((w/2) - 13,6);
+        printf("0 - Sair");
+        printf("\n");
+        gotoxy((w/2) - 13,7);
+        printf("-> ");
         scanf("%d", &c);
         getchar();
         switch (c)
         {
         case 1:
-            printf("Digite o seu nome(no maximo 100 caracteres)\n->");
+            gotoxy((w/2) - 25,4);
+            printf("Digite o seu nome(no maximo 100 caracteres)\n");
+            gotoxy((w/2) - 13,5);
+            printf("            ");
+            gotoxy((w/2) - 13,6);
+            printf("           ");
+            gotoxy((w/2) - 13,7);
+            printf("           ");
+            gotoxy((w/2) - 13,5);
+            printf("->");
             scanf("%[^\n]", no);
             ai = newPlayer("Gervásio");
             jog = newPlayer(no);
@@ -151,15 +184,16 @@ void main(){
             freeP(ai);
             freeP(jog);
             freePi(pilha);
+            system("clear");
             break;
         case 2:
             tutorial();
-            credits();
             break;
         case 0:
             run = 0;
             break;
         default:
+            system("clear");
             printf("Nao existe essa opcao!!!\n");
         }
     }
