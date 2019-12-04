@@ -15,11 +15,11 @@
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
 void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-    system("cls");
-#else
-    //system("clear");
-#endif
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+        system("cls");
+    #else
+        //system("clear");
+    #endif
     createDeck(deck);
     dealCards(jog, ai, deck, &nc);
     printCp(jog);
@@ -32,33 +32,26 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
     int mov = 0;
     int r = 1;
     while (r && lives != 0 && (contC(jog) != 0 || contC(ai) != 0)){
-        if (play)
-        {
+        if (play){
             printf("Escolha a opção:\n1 - Dar dica\n2 - Jogar carta\n3 - Descartar carta\n0 - Sair\n-> ");
             scanf("%d", &mov);
-            switch (mov)
-            {
+            switch (mov){
             case 1:
                 printf("Deseja indicar uma cor ou um numero?\n1 - Numero\n2 - Cor\n0 - Voltar para tras\n-> ");
                 scanf("%d", &mov);
-                while (mov >= 0 && mov <= 2)
-                {
-                    if (mov == 1)
-                    {
+                while (mov >= 0 && mov <= 2){
+                    if (mov == 1){
                         selNum(ai, play);
                         break;
                     }
-                    else if (mov == 2)
-                    {
+                    else if (mov == 2){
                         selCor(ai, play);
                         break;
                     }
-                    else if (mov == 0)
-                    {
+                    else if (mov == 0){
                         break;
                     }
-                    else
-                    {
+                    else{
                         printf("Esse valor nao existe!!!");
                     }
                     printf("Deseja indicar uma cor ou um numero?\n1 - Numero\n2 - Cor\n0 - Voltar para tras\n-> ");
@@ -76,20 +69,19 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                 break;
             case 0:
                 r = 0;
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-                //system("cls");
-//senao e linux/mac
-#else
-                //system("clear");
-#endif
+                #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+                                //system("cls");
+                //senao e linux/mac
+                #else
+                                //system("clear");
+                #endif
                 break;
             default:
                 break;
             }
             play = 0;
         }
-        else
-        {
+        else{
             play = 1;
         }
     }
@@ -159,8 +151,7 @@ void main(){
         printf("-> ");
         scanf("%d", &c);
         getchar();
-        switch (c)
-        {
+        switch (c){
         case 1:
             gotoxy((w/2) - 25,4);
             printf("Digite o seu nome(no maximo 100 caracteres)\n");
