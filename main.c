@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #include <windows.h>
 #else
@@ -12,8 +13,7 @@
 #include "player.h"
 #include "ShowCard.h"
 
-void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np)
-{
+void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
     system("cls");
 #else
@@ -30,8 +30,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
     play = 1;
     int mov = 0;
     int r = 1;
-    while (r && lives != 0 && (contC(jog) != 0 || contC(ai) != 0))
-    {
+    while (r && lives != 0 && (contC(jog) != 0 || contC(ai) != 0)){
         if (play)
         {
             printf("Escolha a opção:\n1 - Dar dica\n2 - Jogar carta\n3 - Descartar carta\n0 - Sair\n-> ");
@@ -96,18 +95,20 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
     return;
 }
 
-void tutorial()
-{
+void tutorial(){
+    
     return;
 }
 
-void credits()
-{
+void credits(){
+    setlocale(LC_ALL, "");
+    printf("                         _  ___            Produzido por:\n");
+    printf("%lc__%lc  %lc__%lc  %lc%lc %lc  %lc__%lc  |_)  %lc              Tiago Morais 71395\n", 0x2502, 0x2502,  0x2571, 0x2572, 0x2502, 0x2572, 0x2502, 0x2571, 0x2572, 0x2502);
+    printf("%lc  %lc %lc    %lc %lc %lc%lc %lc    %lc |_) _%lc_             Tomas Silva 70680\n", 0x2502, 0x2502, 0x2571, 0x2572, 0x2502, 0x2572, 0x2502, 0x2571, 0x2572, 0x2502);
     return;
 }
 
-void main()
-{
+void main(){
 
     char no[128];
     Deck deck = NULL;
@@ -129,9 +130,9 @@ void main()
     //system("clear");
 #endif
 
-    while (run)
-    {
-        printf("1 - New Game\n2 - Tutorial\n3 - Credits\n0 - Sair\n-> ");
+    while (run){
+        credits();
+        printf("\n\n1 - New Game\n2 - Tutorial\n0 - Sair\n-> ");
         scanf("%d", &c);
         getchar();
         switch (c)
@@ -153,8 +154,6 @@ void main()
             break;
         case 2:
             tutorial();
-            break;
-        case 3:
             credits();
             break;
         case 0:
