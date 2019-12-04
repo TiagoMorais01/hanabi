@@ -41,11 +41,13 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                 scanf("%d", &mov);
                 while (mov >= 0 && mov <= 2){
                     if (mov == 1){
-                        selNum(ai, play);
+                        if(selNum(ai, play))
+                            tips--;
                         break;
                     }
                     else if (mov == 2){
-                        selCor(ai, play);
+                        if(selCor(ai, play))
+                            tips--;
                         break;
                     }
                     else if (mov == 0){

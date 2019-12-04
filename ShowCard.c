@@ -47,7 +47,6 @@ void selColor(Player p, int n){
 }
 
 void drawCard(int x, int y, int val){
-    setlocale(LC_ALL, "");
     gotoxy(x, y);
     printf("%lc%lc%lc%lc%lc%lc%lc", 0x256D, 0x2500, 0x2500, 0x2500, 0x2500, 0x2500, 0x256E);
     gotoxy(x, y+1);
@@ -76,7 +75,6 @@ void drawCard(int x, int y, int val){
 }
 
 void drawCardI(int x, int y, int val){
-    setlocale(LC_ALL, "");
     gotoxy(x, y);
     printf("%lc%lc%lc%lc%lc%lc%lc", 0x256D, 0x2504, 0x2504, 0x2504, 0x2504, 0x2504, 0x256E);
     gotoxy(x, y+1);
@@ -134,7 +132,7 @@ void drawTrash(int x, int y, Card c){
 }
 
 void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips , int nc, int nt, int np){
-
+    setlocale(LC_ALL, "");
     int w, h;
     int col,row;
     int i = 0;

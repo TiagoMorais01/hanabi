@@ -39,6 +39,104 @@ int contC(Player p){
     return n;
 }
 
+int selNum(Player p, int play){
+    int n = 0;
+    int i = 0;
+    int arr[5];
+    int j = 0;
+    char val = 0;
+    for (i = 0; i < 5; i++){
+        if(checkNum( ( (char) getCnum(p->cards[i])+48 ), arr, j ) || i == 0){
+            arr[j] = getCnum(p->cards[i]);
+            j++;
+        }
+    }
+
+    quickSort(arr, 0, j-1);
+
+    printf("Qual e o numero que quer indicar?\n");
+    printf("Numero: %d", arr[0]);
+    for (i = 1; i < j; i++){
+        printf(" %d", arr[i]);
+    }
+    printf("\n0 - Voltar para o menu");
+    printf("\n->");
+    while (getchar()!='\n');
+    scanf("%c", &val);
+
+    while ((checkNum(val, arr, j))){
+        
+        printf("Esse numero não existe!!!\n");
+        printf("Qual e o numero que quer indicar?\n");
+        printf("Numero: %d", arr[0]);
+        for (i = 1; i < j; i++){
+            printf(" %d", arr[i]);
+        }
+        printf("\n0 - Voltar para o menu");
+        printf("\n->");
+        while (getchar()!='\n');
+        scanf("%c", &val);
+    }
+    
+    if (((int)val)-48){
+        giveTipN(p->cards, ((int)val)-48);
+        return 1;
+    }
+    else{
+        return 0;
+    }
+    
+    
+}
+
+int selCor(Player p, int play){
+    int n = 0;
+    int i = 0;
+    char arr[5];
+    int j = 0;
+    char val;
+    //armazena as letras das cores para nao ter letras repetidas
+    for (i = 0; i < 5; i++){
+        if(checkChar(getCc(p->cards[i]), arr, j) || i == 0){
+            arr[j] = getCc(p->cards[i]);
+            j++;
+        }
+    }
+
+    //perguntar qual é a cor que o utilizador deseja indicar
+    printf("Qual e o cor que quer indicar?\n");
+    printf("Cor: %c", arr[0]);
+    for (i = 1; i < j; i++){
+        printf(" %c", arr[i]);
+    }
+    printf("\n0 - Voltar para o menu");
+    printf("\n->");
+    fflush(stdin);
+    scanf("%s", &val);
+    
+    while (checkChar(val, arr, j)){
+        printf("Essa cor não existe!!!\n");
+        printf("Qual e o cor que quer indicar?\n");
+        printf("Cor: %c", arr[0]);
+        for (i = 1; i < j; i++){
+            printf(" %c", arr[i]);
+        }
+        printf("\n0 - Voltar para o menu");
+        printf("\n->");
+        fflush(stdin);
+        scanf("%s", &val);
+    }
+
+    if (val != '0'){
+        giveTipC(p->cards, val);
+        return 1;
+    }
+    else{
+        return 0;
+    }
+    
+}
+
 void swapN(int *xp, int *yp){
     int temp = *xp;
     *xp = *yp;
@@ -102,89 +200,6 @@ void setAllVisNP(Player p){
     for (i = 0; i < 5; i++){
         setAllVisNC(p->cards[i]);
     }
-}
-
-void selNum(Player p, int play){
-    int n = 0;
-    int i = 0;
-    int arr[5];
-    int j = 0;
-    char val = 0;
-    for (i = 0; i < 5; i++){
-        if(checkNum( ( (char) getCnum(p->cards[i])+48 ), arr, j ) || i == 0){
-            arr[j] = getCnum(p->cards[i]);
-            j++;
-        }
-    }
-
-    quickSort(arr, 0, j-1);
-
-    printf("Qual e o numero que quer indicar?\n");
-    printf("Numero: %d", arr[0]);
-    for (i = 1; i < j; i++){
-        printf(" %d", arr[i]);
-    }
-    printf("\n0 - Voltar para o menu");
-    printf("\n->");
-    while (getchar()!='\n');
-    scanf("%c", &val);
-
-    while ((checkNum(val, arr, j))){
-        
-        printf("Esse numero não existe!!!\n");
-        printf("Qual e o numero que quer indicar?\n");
-        printf("Numero: %d", arr[0]);
-        for (i = 1; i < j; i++){
-            printf(" %d", arr[i]);
-        }
-        printf("\n0 - Voltar para o menu");
-        printf("\n->");
-        while (getchar()!='\n');
-        scanf("%c", &val);
-    }
-    
-    giveTipN(p->cards, ((int)val)-48);
-}
-
-void selCor(Player p, int play){
-    int n = 0;
-    int i = 0;
-    char arr[5];
-    int j = 0;
-    char val;
-    //armazena as letras das cores para nao ter letras repetidas
-    for (i = 0; i < 5; i++){
-        if(checkChar(getCc(p->cards[i]), arr, j) || i == 0){
-            arr[j] = getCc(p->cards[i]);
-            j++;
-        }
-    }
-
-    //perguntar qual é a cor que o utilizador deseja indicar
-    printf("Qual e o cor que quer indicar?\n");
-    printf("Cor: %c", arr[0]);
-    for (i = 1; i < j; i++){
-        printf(" %c", arr[i]);
-    }
-    printf("\n0 - Voltar para o menu");
-    printf("\n->");
-    fflush(stdin);
-    scanf("%s", &val);
-    
-    while (checkChar(val, arr, j)){
-        printf("Essa cor não existe!!!\n");
-        printf("Qual e o cor que quer indicar?\n");
-        printf("Cor: %c", arr[0]);
-        for (i = 1; i < j; i++){
-            printf(" %c", arr[i]);
-        }
-        printf("\n0 - Voltar para o menu");
-        printf("\n->");
-        fflush(stdin);
-        scanf("%s", &val);
-    }
-
-    giveTipC(p->cards, val);
 }
 
 void pickCard(Player p, Card cardN){
