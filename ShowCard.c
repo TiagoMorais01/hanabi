@@ -149,6 +149,7 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
         w = size.ws_col;
         h = size.ws_row;
+        //xdotool windowsize $WINDOW_ID_GOES_HERE $WIDTH $HEIGHT
     #endif
 
     //col = csbi.srWindow.Right - csbi.srWindow.Left + 1; 
@@ -231,10 +232,6 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
 
     //setAllVisCP(jog);
     //setAllVisNP(jog);
-    
-    while (nt < 13){
-        gototrash(deck, trash, getCa(deck, nt+1), nt++, nc--);
-    }
 
     sortTrash(trash, 0, nt - 1);
 

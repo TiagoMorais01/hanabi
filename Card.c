@@ -25,13 +25,19 @@ Card newCard(){
     return (Card) malloc(sizeof(struct card));
 }
 
-Card copyCard(Card c, int i){
+Card setCardpos(Card c, int i){
     c->pos = i;
     return c;
 }
 
 Card getCa(Deck d, int nc){
     return d->deck[nc-1];
+}
+
+Card grCa(Deck d, int nc){
+    Card aux = d->deck[nc - 1];
+    d->deck[nc - 1] = NULL;
+    return aux;
 }
 
 Card getPilha(Pilha p, int np){
@@ -222,12 +228,6 @@ void printCards(Deck d) {
 
 }
 
-void gototrash(Deck d, Deck t, Card c, int n, int nc) {
-    c->pos = n;
-    d->deck[nc-1] = NULL;
-    t->deck[n] = c;
-}
-
 void swapT(Card *xp, Card *yp){
     Card temp = *xp;
     *xp = *yp;
@@ -277,6 +277,11 @@ void sortPilha(Pilha pilha, int low, int np){
         sortPilha(pilha, low, pi - 1);  // Before pi
         sortPilha(pilha, pi + 1, np); // After pi
     }
+}
+
+void gototrash(Deck t, Card c, int nt) {
+    c = setCardpos(c, nt);
+    t->deck[nt] = c;
 }
 
 void freePi(Pilha p){
