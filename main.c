@@ -18,7 +18,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
         system("cls");
     #else
-        //system("clear");
+        system("clear");
     #endif
     createDeck(deck);
     dealCards(jog, ai, deck, &nc);
@@ -221,7 +221,6 @@ void tutorial(){
 }
 
 void credits(int w, int h){
-    setlocale(LC_ALL, "");
     gotoxy((w/2) - 20,1);
     printf("                         _  ___            Produzido por:\n");
     gotoxy((w/2) - 20,2);
@@ -249,8 +248,10 @@ void main(){
     int run = 1;
     char c;
 
+    setlocale(LC_ALL, "");
+
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-        //system("cls");
+        system("cls");
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         row = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
         w = csbi.dwSize.X;
@@ -265,16 +266,20 @@ void main(){
 
     while (run){
         credits(w, h);
-        printf("\n\n");
+        gotoxy((w/2) - 13,4);
+        printf("            ");
         gotoxy((w/2) - 13,4);
         printf("1 - New Game");
-        printf("\n");
+        gotoxy((w/2) - 13,5);
+        printf("            ");
         gotoxy((w/2) - 13,5);
         printf("2 - Tutorial");
-        printf("\n");
+        gotoxy((w/2) - 13,6);
+        printf("            ");
         gotoxy((w/2) - 13,6);
         printf("0 - Sair");
-        printf("\n");
+        gotoxy((w/2) - 13,7);
+        printf("            ");
         gotoxy((w/2) - 13,7);
         printf("-> ");
         scanf("%c", &c);
@@ -286,9 +291,11 @@ void main(){
                 gotoxy((w/2) - 13,5);
                 printf("            ");
                 gotoxy((w/2) - 13,6);
-                printf("           ");
+                printf("            ");
                 gotoxy((w/2) - 13,7);
-                printf("           ");
+                printf("            ");
+                gotoxy((w/2) - 13,8);
+                printf("                             ");
                 gotoxy((w/2) - 13,5);
                 printf("->");
                 scanf("%[^\n]", no);//fazer while para não aceitar um nome vazio
@@ -306,17 +313,30 @@ void main(){
                 freeP(jog);
                 freePi(pilha);
                 /* --------------------------- */
-                system("clear");
+                #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+                    system("cls");
+                #else
+                    system("clear");
+                #endif
                 break;
             case '2':
                 tutorial();
-                system("clear");
+                #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+                    system("cls");
+                #else
+                    system("clear");
+                #endif
                 break;
             case '0':
                 run = 0;
                 break;
             default:
-                system("clear");
+                #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+                    system("cls");
+                #else
+                    system("clear");
+                #endif
+                gotoxy((w/2) - 13,8);
                 printf("Nao existe essa opcao!!!\n");
         }
     }

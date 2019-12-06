@@ -132,16 +132,18 @@ void drawTrash(int x, int y, Card c){
 }
 
 void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips , int nc, int nt, int np){
-    setlocale(LC_ALL, "");
+    
     int w, h;
     int col,row;
     int i = 0;
   
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-        //system("cls");
+        system("cls");
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         row = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
         w = csbi.dwSize.X;
+        //col = csbi.srWindow.Right - csbi.srWindow.Left + 1; 
+        //row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
     //senao e linux/mac
     #else
         system("clear");
@@ -152,9 +154,6 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
         //xdotool windowsize $WINDOW_ID_GOES_HERE $WIDTH $HEIGHT
     #endif
 
-    //col = csbi.srWindow.Right - csbi.srWindow.Left + 1; 
-    //row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-
     int tamNai = tamNpl(ai);
     int tamNjog = tamNpl(jog);
     
@@ -163,17 +162,26 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
 
     gotoxy((w/2) + (tamNai/2)-11,3);
     printf("%s", getnome(ai));
+
+    gotoxy((w/5 - 15), 2);
+    printf("Dicas: %d", tips);
+
+    gotoxy((w/5-15),3);
+    printf("Vidas: %d", lives);
+    /* Por a funcionar o corações e as dicas unicode e fonts
     if(tips != 0){
         gotoxy((w/5 - 15), 2);
-        printf("%lc", 0x1F4A1);
+        printf("%lc", 0x26A1);
         for(i = 1;i < tips; i++)
-            printf(" %lc", 0x1F4A1);
+            printf(" %lc", 0x26A1);
     }
     
     gotoxy((w/5-15),3);
     printf("%lc", 0x2764);
     for(i = 1;i < lives; i++)
         printf(" %lc", 0x2764);
+
+    */
 
     //mao Gervásio
     setColor(getCc(getCard(ai, 0)));
