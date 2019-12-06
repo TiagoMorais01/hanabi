@@ -209,6 +209,11 @@ void tutorial(){
     if(!(regras = fopen("Regras.txt","r")))
         printf("Erro ao abrir o ficheiro");
     else{
+        #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+            system("cls");
+        #else
+            system("clear");
+        #endif
         char *ch = malloc(200);
         size_t t = 200;
         while(getline(&ch, &t, regras) != -1){
