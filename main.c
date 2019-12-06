@@ -28,12 +28,11 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
     //escolhe a sorte qual jogardor vai começar
     int play = rand() % 2;
     play = 1;
-    char mov = 0;
-    char x = 0;
+    char mov[3];
+    char x[3];
     int r = 1;
     while (r && lives != 0 && (contC(jog) != 0 || contC(ai) != 0)){
         if (play){
-            mov = 0;
             gotoxy(0, 18);
             printf("                                                 ");
             gotoxy(0, 18);
@@ -58,143 +57,179 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
             printf("                                                 ");
             gotoxy(0, 23);
             printf("-> ");
-            scanf("%s", &mov);
+            
+            scanf("%s", mov);
             while (getchar()!='\n');
-            switch (mov){
-                case '1':{
+            if (strlen(mov) == 1){
+                switch (mov[0]){
+                    case '1':{
+                        if (tips > 0){
+                            gotoxy(0, 18);
+                            printf("                                                 ");
+                            gotoxy(0, 18);
+                            printf("Deseja indicar uma cor ou um numero?");
+                            gotoxy(0, 19);
+                            printf("                                                 ");
+                            gotoxy(0, 19);
+                            printf("1 - Numero");
+                            gotoxy(0, 20);
+                            printf("                                                 ");
+                            gotoxy(0, 20);
+                            printf("2 - Cor");
+                            gotoxy(0, 21);
+                            printf("                                                 ");
+                            gotoxy(0, 21);
+                            printf("0 - Voltar para tras");
+                            gotoxy(0, 22);
+                            printf("                                                 ");
+                            gotoxy(0, 22);
+                            printf("-> ");
+                            gotoxy(0, 23);
+                            printf("                                                 ");
+                            gotoxy(0, 24);
+                            printf("                                                 ");
+                            
+                            gotoxy(4, 22);
+                            scanf("%s", x);
+                            while (getchar()!='\n');
+                            while ((strlen(x) > 1) || (x[0] < '0' || x[0] > '2')){
+                                gotoxy(0, 18);
+                                printf("                                                 ");
+                                gotoxy(0, 18);
+                                printf("Esse valor nao existe!!!");
+                                gotoxy(0, 19);
+                                printf("                                                 ");
+                                gotoxy(0, 19);
+                                printf("Deseja indicar uma cor ou um numero?");
+                                gotoxy(0, 20);
+                                printf("                                                 ");
+                                gotoxy(0, 20);
+                                printf("1 - Numero");
+                                gotoxy(0, 21);
+                                printf("                                                 ");
+                                gotoxy(0, 21);
+                                printf("2 - Cor");
+                                gotoxy(0, 22);
+                                printf("                                                 ");
+                                gotoxy(0, 22);
+                                printf("0 - Voltar para tras");
+                                gotoxy(0, 23);
+                                printf("                                                 ");
+                                gotoxy(0, 23);
+                                printf("-> ");
+                                scanf("%s", x);
+                                while (getchar()!='\n');
+                            }
 
-                    gotoxy(0, 18);
-                    printf("                                                 ");
-                    gotoxy(0, 18);
-                    printf("Deseja indicar uma cor ou um numero?");
-                    gotoxy(0, 19);
-                    printf("                                                 ");
-                    gotoxy(0, 19);
-                    printf("1 - Numero");
-                    gotoxy(0, 20);
-                    printf("                                                 ");
-                    gotoxy(0, 20);
-                    printf("2 - Cor");
-                    gotoxy(0, 21);
-                    printf("                                                 ");
-                    gotoxy(0, 21);
-                    printf("0 - Voltar para tras");
-                    gotoxy(0, 22);
-                    printf("                                                 ");
-                    gotoxy(0, 22);
-                    printf("-> ");
-                    gotoxy(0, 23);
-                    printf("                                                 ");
-                    
-                    gotoxy(4, 22);
-                    scanf("%s", &x);
-                    while (getchar()!='\n');
-                    while ((x < '0' || x > '2')){
-                        x = 0;
-                        gotoxy(0, 18);
-                        printf("                                                 ");
-                        gotoxy(0, 18);
-                        printf("Esse valor nao existe!!!");
-                        gotoxy(0, 19);
-                        printf("                                                 ");
-                        gotoxy(0, 19);
-                        printf("Deseja indicar uma cor ou um numero?");
-                        gotoxy(0, 20);
-                        printf("                                                 ");
-                        gotoxy(0, 20);
-                        printf("1 - Numero");
-                        gotoxy(0, 21);
-                        printf("                                                 ");
-                        gotoxy(0, 21);
-                        printf("2 - Cor");
-                        gotoxy(0, 22);
-                        printf("                                                 ");
-                        gotoxy(0, 22);
-                        printf("0 - Voltar para tras");
-                        gotoxy(0, 23);
-                        printf("                                                 ");
-                        gotoxy(0, 23);
-                        printf("-> ");
-                        scanf("%s", &x);
-                        while (getchar()!='\n');
+                            if(strlen(x) == 1){
+                                if (x[0] == '1'){
+                                    if(selNum(ai, play))
+                                        tips--;
+                                    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                                }
+                                else if (x[0] == '2'){
+                                    if(selCor(ai, play))
+                                        tips--;
+                                    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                                }
+                            }
+                        }
+                        else{
+                            gotoxy(0, 24);
+                            printf("                                                 ");
+                            gotoxy(0, 24);
+                            printf("Você não tem dicas para dar!!!");
+                        }
+                        break;
                     }
+                    case '2':{
+                        //do some code
+                        ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                        break;
+                    }
+                    case '3':{
+                        if(tips < 8){
+                            gotoxy(0, 18);
+                            printf("                                                 ");
+                            gotoxy(0, 18);
+                            printf("Qual e a carta que deseja descartar?(1 - 5)");
+                            gotoxy(0, 19);
+                            printf("                                                 ");
+                            gotoxy(0, 19);
+                            printf("0 - Voltar para o menu");
+                            gotoxy(0, 20);
+                            printf("                                                 ");
+                            gotoxy(0, 20);
+                            printf("-> ");
+                            gotoxy(0, 21);
+                            printf("                                                 ");
+                            gotoxy(0, 22);
+                            printf("                                                 ");
+                            gotoxy(0, 23);
+                            printf("                                                 ");
+                            gotoxy(0, 24);
+                            printf("                                                 ");
+                            gotoxy(4, 20);
+                            scanf("%s", x);
+                            while ((strlen(x) > 1) || (x[0] < '0' || x[0] > '5')){
+                                gotoxy(0, 18);
+                                printf("                                                 ");
+                                gotoxy(0, 18);
+                                printf("A carta que escolheu não existe!!!!");
+                                gotoxy(0, 19);
+                                printf("                                                 ");
+                                gotoxy(0, 19);
+                                printf("Qual e a carta que deseja descartar?(1 - 5)");
+                                gotoxy(0, 20);
+                                printf("                                                 ");
+                                gotoxy(0, 20);
+                                printf("0 - Voltar para o menu");
+                                gotoxy(0, 21);
+                                printf("                                                 ");
+                                gotoxy(0, 21);
+                                printf("-> ");
+                                gotoxy(0, 22);
+                                printf("                                                 ");
+                                gotoxy(0, 23);
+                                printf("                                                 ");
+                                gotoxy(4, 21);
+                                scanf("%s", x);
+                            }
 
-                    if (x == '1'){
-                        if(selNum(ai, play))
-                            tips--;
-                        ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                            if ((x[0] != '0')){
+                                gototrash(trash, grCard(jog, ((int)(x[0]))-49), nt++);
+                                if (nc > 0){
+                                    pickCard(jog, grCa(deck, nc--));
+                                }
+                                tips++;
+                                play = 0;
+                                ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                            }
+                        }
+                        else{
+                            gotoxy(0, 24);
+                            printf("                                                 ");
+                            gotoxy(0, 24);
+                            printf("Você não pode descartar cartas!!! Tem de ter menos de 8 dicas para poder descartar uma carta.");
+                        }
+                        break;
                     }
-                    else if (x == '2'){
-                        if(selCor(ai, play))
-                            tips--;
-                        ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
-                    }
-                    break;
+                    case '0':
+                        r = 0;
+                        break;
+                    default:
+                        gotoxy(0, 24);
+                        printf("                                                 ");
+                        gotoxy(0, 24);
+                        printf("A opeção que escolheu não existe!!!");
+                        break;
                 }
-                case '2':{
-                    //do some code
-                    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
-                    break;
-                }
-                case '3':{
-                    gotoxy(0, 18);
-                    printf("                                                 ");
-                    gotoxy(0, 18);
-                    printf("Qual e a carta que deseja descartar?(1 - 5)");
-                    gotoxy(0, 19);
-                    printf("                                                 ");
-                    gotoxy(0, 19);
-                    printf("0 - Voltar para o menu");
-                    gotoxy(0, 20);
-                    printf("                                                 ");
-                    gotoxy(0, 20);
-                    printf("-> ");
-                    gotoxy(0, 21);
-                    printf("                                                 ");
-                    gotoxy(0, 22);
-                    printf("                                                 ");
-                    gotoxy(0, 23);
-                    printf("                                                 ");
-                    gotoxy(4, 20);
-                    scanf("%s", &x);
-                    while (x < '0' || x > '5'){
-                        gotoxy(0, 18);
-                        printf("                                                 ");
-                        gotoxy(0, 18);
-                        printf("A carta que escolheu não existe!!!!");
-                        gotoxy(0, 19);
-                        printf("                                                 ");
-                        gotoxy(0, 19);
-                        printf("Qual e a carta que deseja descartar?(1 - 5)");
-                        gotoxy(0, 20);
-                        printf("                                                 ");
-                        gotoxy(0, 20);
-                        printf("0 - Voltar para o menu");
-                        gotoxy(0, 21);
-                        printf("                                                 ");
-                        gotoxy(0, 21);
-                        printf("-> ");
-                        gotoxy(0, 22);
-                        printf("                                                 ");
-                        gotoxy(0, 23);
-                        printf("                                                 ");
-                        gotoxy(4, 21);
-                        scanf("%s", &x);
-                    }
-
-                    if (x != '0'){                  
-                        gototrash(trash, grCard(jog, ((int)mov)-48), nt++);
-                        pickCard(jog, grCa(deck, nc--));
-                        play = 0;
-                        ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
-                    }
-                    break;
-                }
-                case '0':
-                    r = 0;
-                    break;
-                default:
-                    break;
+            }
+            else{
+                gotoxy(0, 24);
+                printf("                                                 ");
+                gotoxy(0, 24);
+                printf("A opeção que escolheu não existe!!!");
             }
         }
         else{

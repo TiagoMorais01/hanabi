@@ -75,7 +75,7 @@ int selNum(Player p, int play){
     gotoxy(0, 20);
     printf("                                       ");
     gotoxy(0, 20);
-    printf("0 - Voltar para tras");
+    printf("0 - Voltar para o menu");
     gotoxy(0, 21);
     printf("                                       ");
     gotoxy(0, 21);
