@@ -24,7 +24,7 @@ Conclusão do jogo:
 
 	O jogo pode terminar de três maneiras diferentes:
 
-		– Se a terceira ficha vermelha de penalidade for utilizada, os jogadores perdem imediatamente o jogo e marcam zero pontos.
+		– Se a terceira vida for perdida , os jogadores perdem imediatamente o jogo e marcam zero pontos.
 
 		– Se os jogadores completarem todas as cinco cores de fogo-de-artifício, o jogo acaba imediatamente e obtêm a pontuação máxima de 25 pontos.
 
