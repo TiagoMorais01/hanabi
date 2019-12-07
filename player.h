@@ -1,4 +1,4 @@
-typedef struct player* Player;
+typedef struct player* Player;//Criar uma variavel global para que a estrutura jogador possa ser reconhecida
 
 Player newPlayer(char *);
 Card getCard(Player, int);
@@ -11,7 +11,6 @@ int partition (int*, int, int);
 char *getnome(Player);
 void swapN(int *, int *);
 void freeP(Player);
-void showCard();
 void setAllVisCP(Player);
 void setAllVisNP(Player);
 void quickSort(int*, int, int);

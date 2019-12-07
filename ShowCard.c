@@ -13,7 +13,7 @@
 #include "ShowCard.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
-
+//Função para definir uma cor para as letras imprimidas
 void setColor(char c){
     switch (c){
         case 'B':
@@ -37,6 +37,7 @@ void setColor(char c){
     }
 }
 
+//Função para verificar se o jogador tem ou não a cor visivel para imprimir na respetiva cor a carta
 void selColor(Player p, int n){
     if(getCvc(getCard(p, n))){
         setColor(getCc(getCard(p, n)));
@@ -46,6 +47,7 @@ void selColor(Player p, int n){
     }
 }
 
+//Função para desenhar uma carta
 void drawCard(int x, int y, int val){
     gotoxy(x, y);
     printf("%lc%lc%lc%lc%lc%lc%lc", 0x256D, 0x2500, 0x2500, 0x2500, 0x2500, 0x2500, 0x256E);
@@ -74,6 +76,7 @@ void drawCard(int x, int y, int val){
 
 }
 
+//Função para desenhar uma carta tracejada para quando não tiver nenhuma carta na pilha
 void drawCardI(int x, int y, int val){
     gotoxy(x, y);
     printf("%lc%lc%lc%lc%lc%lc%lc", 0x256D, 0x2504, 0x2504, 0x2504, 0x2504, 0x2504, 0x256E);
@@ -101,6 +104,7 @@ void drawCardI(int x, int y, int val){
     printf("%lc%lc%lc%lc%lc%lc%lc\n", 0x2570, 0x2504, 0x2504, 0x2504, 0x2504, 0x2504, 0x256F);
 }
 
+//Função para desenhar uma carta para o jogador(desenha so meia carta)
 void drawCardP(int x, int y, int val){
 
     gotoxy(x, y);
@@ -123,6 +127,7 @@ void drawCardP(int x, int y, int val){
     }
 }
 
+//Função para desenhar uma carta para o trash(Desenha so meia carta e com o numero mais inclinado para a esquerda)
 void drawTrash(int x, int y, Card c){
     gotoxy(x, y);
     printf("%lc%lc%lc%lc%lc%lc%lc", 0x256D, 0x2500, 0x2500, 0x2500, 0x2500, 0x2500, 0x256E);
@@ -131,12 +136,13 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
+//Função responsável por desenhar a mesa de jogo(obtem: O Dekc, a lixeira, o jogador e a ai, a pilha, o numero de vidas, as dicas, o numero de cartas no dekc, na lixeira e na pilha)
 void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips , int nc, int nt, int np){
     
     int w, h;
     int col,row;
     int i = 0;
-  
+    //Vê se é windows para obter o tamanho da janelas das librarias corretas
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
         system("cls");
         CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -157,18 +163,20 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
     int tamNai = tamNpl(ai);
     int tamNjog = tamNpl(jog);
     
-    
+    //Desenhar uma carta para o Deck
     drawCard(0,1,nc);
-
+    
+    //Escrever o nome da AI
     gotoxy((w/2) + (tamNai/2)-11,3);
     printf("%s", getnome(ai));
 
+    //Imprimir o numero de dicas e vida
     gotoxy((w/5 - 15), 2);
     printf("Dicas: %d", tips);
 
     gotoxy((w/5-15),3);
     printf("Vidas: %d", lives);
-    /* Por a funcionar o corações e as dicas unicode e fonts
+    /* Por a funcionar os corações e as dicas unicode e fonts
     if(tips != 0){
         gotoxy((w/5 - 15), 2);
         printf("%lc", 0x26A1);
@@ -183,7 +191,7 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
 
     */
 
-    //mao Gervásio
+    //Mão Gervásio(AI)
     setColor(getCc(getCard(ai, 0)));
     drawCard((w/2)-6*2-10, 5, getCnum(getCard(ai, 0)));
     setColor(getCc(getCard(ai, 1)));
@@ -195,14 +203,15 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
     setColor(getCc(getCard(ai, 4)));
     drawCard((w/2)+10, 5, getCnum(getCard(ai, 4)));
 
-    //jogo  
-    sortPilha(pi, 0, np - 1);
+    //Jogo(Pilha)
+    sortPilha(pi, 0, np - 1);//Função para ordenar a pilha
     int ac = 0;
     int coresI[5] = {0, 0, 0, 0 ,0};
     char cores[6] = {'B','G','R','W','Y'};
     int maior = 0;
     i = 0;
     
+    //Imprimir as cartas por ordem de cor de numero
     while(i < np){
         if (getPilha(pi, i) != NULL){
             if(cores[ac] == getCc(getPilha(pi, i))){
@@ -238,14 +247,13 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
         
     }
 
-    //setAllVisCP(jog);
-    //setAllVisNP(jog);
-
+    //Função para ordenar a lixeira(trash) por onde de cor e crescente
     sortTrash(trash, 0, nt - 1);
 
     char p;
     int k = 0, l = 0, m = 0;
 
+    //Imprime a lixeira(trash)
     for(i = 0 ; i < nt ; i++, l++){
         Card c = getCa(trash, i+1);
         
@@ -269,9 +277,9 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
     }
 
 
-    //mao player
+    //Mão player
     selColor(jog, 0);
-    if(getCvn(getCard(jog, 0))){
+    if(getCvn(getCard(jog, 0))){//Um if para verificar se o numero da carta está visível para imprimir ou não
         drawCardP((w/2)-6*2-10, 13, getCnum(getCard(jog, 0)));
     }
     else{
@@ -310,6 +318,7 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
         drawCardP((w/2)+10, 13, 0);
     }
 
+    //Atribui a cor branca e imprime as posições de cada respetiva carta
     setColor('W');
     gotoxy((w/2)-6*2-10,15);
     printf("  (1)     (2)     (3)     (4)     (5)   \n");

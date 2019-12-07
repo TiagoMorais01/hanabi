@@ -14,25 +14,25 @@
 #include "ShowCard.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
+//Função main do jogo onde ocorre a gestão do jogo
 void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
         system("cls");
     #else
         system("clear");
     #endif
-    createDeck(deck);
-    dealCards(jog, ai, deck, &nc);
-    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
+    createDeck(deck);//Função que preenche o Deck
+    dealCards(jog, ai, deck, &nc);//Função que distribui as cartas pelos jogadores
+    ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);//Função que imprime a mesa do jogo
     time_t t;
     srand((unsigned)time(&t));
-    //escolhe a sorte qual jogardor vai começar
-    int play = rand() % 2;
-    play = 1;
+    int play = rand() % 2;//Escolhe a sorte qual jogardor vai começar
     char mov[3];
     char x[3];
     int r = 1;
+    //Main loop que faz decorrer o jogo
     while (r && lives != 0 && (contC(jog) != 0 || contC(ai) != 0)){
-        if (play){
+        if (play){//Vez do jogador
             gotoxy(0, 18);
             printf("                                                 ");
             gotoxy(0, 18);
@@ -62,7 +62,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
             while (getchar()!='\n');
             if (strlen(mov) == 1){
                 switch (mov[0]){
-                    case '1':{
+                    case '1':{//Dar dica
                         if (tips > 0){
                             gotoxy(0, 18);
                             printf("                                                 ");
@@ -122,13 +122,13 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                             }
 
                             if(strlen(x) == 1){
-                                if (x[0] == '1'){
+                                if (x[0] == '1'){//Dá a dica de um numero
                                     if(selNum(ai, play))
                                         tips--;
                                     ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
                                 }
                                 else if (x[0] == '2'){
-                                    if(selCor(ai, play))
+                                    if(selCor(ai, play))//Dá a dica de uma cor
                                         tips--;
                                     ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
                                 }
@@ -142,12 +142,12 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                         }
                         break;
                     }
-                    case '2':{
+                    case '2':{//Jogar uma carta
                         //do some code
                         ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
                         break;
                     }
-                    case '3':{
+                    case '3':{//Descartar uma carta
                         if(tips < 8){
                             gotoxy(0, 18);
                             printf("                                                 ");
@@ -197,12 +197,12 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                             }
 
                             if ((x[0] != '0')){
-                                gototrash(trash, grCard(jog, ((int)(x[0]))-49), nt++);
+                                gototrash(trash, grCard(jog, ((int)(x[0]))-49), nt++);//Função que passa a carta para o descarte
                                 if (nc > 0){
-                                    pickCard(jog, grCa(deck, nc--));
+                                    pickCard(jog, grCa(deck, nc--));//Função que pega uma carta do deck e atribui ao jogador
                                 }
                                 tips++;
-                                play = 0;
+                                play = 0;//Passa a vez para a AI
                                 ShowCardAI(deck, trash, ai, jog, pi, lives, tips, nc, nt, np);
                             }
                         }
@@ -214,7 +214,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                         }
                         break;
                     }
-                    case '0':
+                    case '0'://Sai do jogo e volta para o menu inicial
                         r = 0;
                         break;
                     default:
@@ -232,13 +232,14 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                 printf("A opção que escolheu não existe!!!");
             }
         }
-        else{
+        else{//Vez da AI
             play = 1;
         }
     }
     return;
 }
 
+//Função com as regras e como se joga
 void tutorial(){
     FILE *regras;
     if(!(regras = fopen("Regras.txt","r")))
@@ -260,6 +261,7 @@ void tutorial(){
     return;
 }
 
+//Função para o creditos
 void credits(int w, int h){
     gotoxy((w/2) - 20,1);
     printf("                         _  ___            Produzido por:\n");
@@ -338,7 +340,8 @@ void main(){
                 printf("                             ");
                 gotoxy((w/2) - 13,5);
                 printf("->");
-                scanf("%[^\n]", no);//fazer while para não aceitar um nome vazio
+                scanf("%[^\n]", no);
+                //Ver se o nome e maior qeu 16 caracteres
                 while (getchar()!='\n');
                 int s = 0;
                 while (strlen(no) > 16){
@@ -366,9 +369,9 @@ void main(){
                 
                 ai = newPlayer("Gervásio");//Cria a AI
                 jog = newPlayer(no);//Cria a estrutura jogador
-                deck = newDeck();//Cria um array deck
-                trash = newDeck();//Cria uma array trash
-                pilha = newPilha();//Cria um array para armazenar as cartas jogadas para a mesa
+                deck = newDeck();//Inicia um array deck
+                trash = newDeck();//Inicia um array trash
+                pilha = newPilha();//Inicia um array para armazenar as cartas jogadas para a mesa
                 newGame(deck, trash, ai, jog, pilha, lives, tips, nc, nt, np);//Função do jogo
                 /* Apaga as variaveis da memoria */
                 free(deck);

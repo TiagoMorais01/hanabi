@@ -1,6 +1,6 @@
-typedef struct card* Card;
-typedef struct deck* Deck;
-typedef struct pilha* Pilha;
+typedef struct card* Card;//Criar uma variavel global para que a estrutura card possa ser reconhecida
+typedef struct deck* Deck;//Criar uma variavel global para que a estrutura deck possa ser reconhecida
+typedef struct pilha* Pilha;//Criar uma variavel global para que a estrutura pilha possa ser reconhecida
 
 Card newCard();
 Card setCardpos(Card, int);

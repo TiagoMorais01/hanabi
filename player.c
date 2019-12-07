@@ -12,6 +12,7 @@ struct player{
     Card cards[5];
 };
 
+//Função para criar um jogador
 Player newPlayer(char *nomeN){
     Player p = (Player) malloc(sizeof(struct player));
     int i = 0;
@@ -22,20 +23,24 @@ Player newPlayer(char *nomeN){
     return p;
 }
 
+//Função para obter uma carta do jogador
 Card getCard(Player p, int i){
     return p->cards[i];
 }
 
+//Função para obter e retira uma carta do jogador
 Card grCard(Player j, int i){
     Card aux = j->cards[i];
     j->cards[i] = NULL;
     return aux;
 }
 
+//Função para obter o tamanho do nome do jogador
 int tamNpl(Player p){
     return strlen(p->nome);
 }
 
+//Função para obter o numero de cartas de cada jogador
 int contC(Player p){
     int n = 0;
     int i = 0;
@@ -46,12 +51,14 @@ int contC(Player p){
     return n;
 }
 
+//Função que faz o jogador escolher um numero para dar a dica
 int selNum(Player p, int play){
     int n = 0;
     int i = 0;
     int arr[5];
     int j = 0;
     char val = 0;
+    //Guarda os numeros disponiveis sem repetição
     for (i = 0; i < 5; i++){
         if(checkNum( ( (char) getCnum(p->cards[i]) + 48 ), arr, j ) || i == 0){
             arr[j] = getCnum(p->cards[i]);
@@ -59,8 +66,10 @@ int selNum(Player p, int play){
         }
     }
 
+    //Ordena os numeros disponiveis para dicas
     quickSort(arr, 0, j-1);
 
+    //Perguntar qual é o numero que o utilizador deseja indicar
     gotoxy(0, 18);
     printf("                                       ");
     gotoxy(0, 18);
@@ -120,7 +129,7 @@ int selNum(Player p, int play){
     }
     
     if (((int)val)-48){
-        giveTipN(p->cards, ((int)val)-48);
+        giveTipN(p->cards, ((int)val)-48);//Função que atribui a dica à carta correspondente
         return 1;
     }
     else{
@@ -130,13 +139,14 @@ int selNum(Player p, int play){
     
 }
 
+//Função que faz o jogador escolher uma cor para dar a dica
 int selCor(Player p, int play){
     int n = 0;
     int i = 0;
     char arr[5];
     int j = 0;
     char val = 0;
-    //armazena as letras das cores para nao ter letras repetidas
+    //Armazena as letras disponiveis sem ter repetidas
     for (i = 0; i < 5; i++){
         if(checkChar(getCc(p->cards[i]), arr, j) || i == 0){
             arr[j] = getCc(p->cards[i]);
@@ -144,7 +154,7 @@ int selCor(Player p, int play){
         }
     }
 
-    //perguntar qual é a cor que o utilizador deseja indicar
+    //Perguntar qual é a cor que o utilizador deseja indicar
     gotoxy(0, 18);
     printf("                                       ");
     gotoxy(0, 18);
@@ -204,7 +214,7 @@ int selCor(Player p, int play){
     }
 
     if (val != '0'){
-        giveTipC(p->cards, val);
+        giveTipC(p->cards, val);//Função que atribui a dica à carta correspondente
         return 1;
     }
     else{
@@ -213,12 +223,14 @@ int selCor(Player p, int play){
     
 }
 
+//Função para trocar inteiros num array
 void swapN(int *xp, int *yp){
     int temp = *xp;
     *xp = *yp;
     *yp = temp;
 }
 
+//Função do quick sort
 int partition (int *arr, int low, int high){
     // pivot (Element to be placed at right position)
     int pivot = arr[high];
@@ -236,6 +248,7 @@ int partition (int *arr, int low, int high){
     return (i + 1);
 }
 
+//Função do quick sort
 void quickSort(int *arr, int low, int high){
     if (low < high){
         /* pi is partitioning index, arr[pi] is now
@@ -247,10 +260,12 @@ void quickSort(int *arr, int low, int high){
     }
 }
 
+//Função para obter o nome do jogador
 char *getnome(Player p){
     return (p->nome);
 }
 
+//Função para libertar a memorio das variveis do tipo jogador
 void freeP(Player p){
     int i = 0;
     for(i = 0; i < 5; i++){
@@ -260,10 +275,7 @@ void freeP(Player p){
     free(p);
 }
 
-void showCard(){
-    return;
-}
-
+//Função para definir todas as cores do jogador visiveis
 void setAllVisCP(Player p){
     int i = 0;
     for (i = 0; i < 5; i++){
@@ -271,6 +283,7 @@ void setAllVisCP(Player p){
     }
 }
 
+//Função para definir todas os numeros do jogador visiveis
 void setAllVisNP(Player p){
     int i = 0;
     for (i = 0; i < 5; i++){
@@ -278,6 +291,7 @@ void setAllVisNP(Player p){
     }
 }
 
+//Função que arrasta todas as cartas para a direita e adicona a nova carta na primeira posição
 void pickCard(Player p, Card cardN){
     int i;
     int pos = 0;
@@ -292,6 +306,7 @@ void pickCard(Player p, Card cardN){
     p->cards[0] = setCardpos(cardN, 0); //pega numa carta do Deck
 }
 
+//Função que distribui cartas para os jogadores antes de começar o jogo
 void dealCards(Player jog, Player ai, Deck d, int *nc){
     int i = 0;
     time_t t;
@@ -320,6 +335,7 @@ void dealCards(Player jog, Player ai, Deck d, int *nc){
     
 }
 
+//Função que imprime as cartas de um jogador(Debug)
 void printCp(Player p){
     int i = 0;
     printf("Player: %s\nCards:\n", p->nome);
