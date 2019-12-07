@@ -87,7 +87,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                             gotoxy(0, 23);
                             printf("                                                 ");
                             gotoxy(0, 24);
-                            printf("                                                 ");
+                            printf("                                                                                                  ");
                             
                             gotoxy(4, 22);
                             scanf("%s", x);
@@ -136,7 +136,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                         }
                         else{
                             gotoxy(0, 24);
-                            printf("                                                 ");
+                            printf("                                                                                                  ");
                             gotoxy(0, 24);
                             printf("Você não tem dicas para dar!!!");
                         }
@@ -168,7 +168,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                             gotoxy(0, 23);
                             printf("                                                 ");
                             gotoxy(0, 24);
-                            printf("                                                 ");
+                            printf("                                                                                                  ");
                             gotoxy(4, 20);
                             scanf("%s", x);
                             while ((strlen(x) > 1) || (x[0] < '0' || x[0] > '5')){
@@ -208,7 +208,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                         }
                         else{
                             gotoxy(0, 24);
-                            printf("                                                 ");
+                            printf("                                                                                                  ");
                             gotoxy(0, 24);
                             printf("Você não pode descartar cartas!!! Tem de ter menos de 8 dicas para poder descartar uma carta.");
                         }
@@ -219,7 +219,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                         break;
                     default:
                         gotoxy(0, 24);
-                        printf("                                                 ");
+                        printf("                                                                                                  ");
                         gotoxy(0, 24);
                         printf("A opeção que escolheu não existe!!!");
                         break;
@@ -227,7 +227,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
             }
             else{
                 gotoxy(0, 24);
-                printf("                                                 ");
+                printf("                                                                                                  ");
                 gotoxy(0, 24);
                 printf("A opeção que escolheu não existe!!!");
             }
