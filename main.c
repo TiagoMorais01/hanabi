@@ -221,7 +221,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                         gotoxy(0, 24);
                         printf("                                                                                                  ");
                         gotoxy(0, 24);
-                        printf("A opeção que escolheu não existe!!!");
+                        printf("A opção que escolheu não existe!!!");
                         break;
                 }
             }
@@ -229,7 +229,7 @@ void newGame(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, 
                 gotoxy(0, 24);
                 printf("                                                                                                  ");
                 gotoxy(0, 24);
-                printf("A opeção que escolheu não existe!!!");
+                printf("A opção que escolheu não existe!!!");
             }
         }
         else{
