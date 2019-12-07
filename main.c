@@ -272,7 +272,7 @@ void credits(int w, int h){
 
 void main(){
 
-    char no[16];
+    char no[20];
     Deck deck = NULL;
     Deck trash = NULL;
     Player ai = NULL;
@@ -340,6 +340,30 @@ void main(){
                 printf("->");
                 scanf("%[^\n]", no);//fazer while para não aceitar um nome vazio
                 while (getchar()!='\n');
+                int s = 0;
+                while (strlen(no) > 16){
+                    gotoxy((w/2) - 25,4);
+                    printf("Digite o seu nome(no maximo 16 caracteres)\n");
+                    gotoxy((w/2) - 13,5);
+                    for (s = 0; s < strlen(no); s++){
+                        printf(" ");
+                        gotoxy((w/2) - 13 + s,5);
+                    }
+                    printf("            ");
+                    gotoxy((w/2) - 13,6);
+                    printf("            ");
+                    gotoxy((w/2) - 25,6);
+                    printf("O nome deve conter no maximo 5 caracteres\n");
+                    gotoxy((w/2) - 13,7);
+                    printf("            ");
+                    gotoxy((w/2) - 13,8);
+                    printf("                             ");
+                    gotoxy((w/2) - 13,5);
+                    printf("->");
+                    scanf("%[^\n]", no);
+                    while (getchar()!='\n');
+                }
+                
                 ai = newPlayer("Gervásio");//Cria a AI
                 jog = newPlayer(no);//Cria a estrutura jogador
                 deck = newDeck();//Cria um array deck

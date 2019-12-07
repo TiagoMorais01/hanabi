@@ -8,7 +8,7 @@
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
 struct player{
-    char nome[16];
+    char nome[20];
     Card cards[5];
 };
 
