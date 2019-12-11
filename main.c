@@ -341,7 +341,7 @@ void main(){
                 gotoxy((w/2) - 13,5);
                 printf("->");
                 scanf("%[^\n]", no);
-                //Ver se o nome e maior qeu 16 caracteres
+                //Ver se o nome é maior que 16 caracteres
                 while (getchar()!='\n');
                 int s = 0;
                 while (strlen(no) > 16){
@@ -356,7 +356,7 @@ void main(){
                     gotoxy((w/2) - 13,6);
                     printf("            ");
                     gotoxy((w/2) - 25,6);
-                    printf("O nome deve conter no maximo 5 caracteres\n");
+                    printf("O nome deve conter no maximo 16 caracteres\n");
                     gotoxy((w/2) - 13,7);
                     printf("            ");
                     gotoxy((w/2) - 13,8);
