@@ -172,12 +172,12 @@ void DeckNull(Deck d, int nc){
 }
 
 //Função para construir uma carta
-void ConsCard(int n, Card ca, char c, int posN) {
+void ConsCard(Card ca, int n, char c, int posN, int vn, int vc) {
     ca->num = n;
     ca->color = c;
     ca->pos = posN;
-    ca->visibleC = 0;
-    ca->visibleN = 0;
+    ca->visibleC = vc;
+    ca->visibleN = vn;
 }
 
 //Função para baralhar o Deck
@@ -208,33 +208,33 @@ void createDeck(Deck d){
             d->deck[i+j*10] = newCard();
             if(num == 1){
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'B', i+j*10);
+                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'B', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'B', i+j*10);
+                    ConsCard(i/2+1, d->deck[i+j*10], 'B', i+j*10, 0, 0);
             }
             else if(num == 2){
                 if(i/2+1 != 1)
-                    ConsCard((i/2)+(i%2), d->deck[i+j*10], 'R', i+j*10);
+                    ConsCard((i/2)+(i%2), d->deck[i+j*10], 'R', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'R', i+j*10);
+                    ConsCard(i/2+1, d->deck[i+j*10], 'R', i+j*10, 0, 0);
             }
             else if(num == 3){
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'G', i+j*10);
+                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'G', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'G', i+j*10);
+                    ConsCard(i/2+1, d->deck[i+j*10], 'G', i+j*10, 0, 0);
             }
             else if(num == 4){
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'Y', i+j*10);
+                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'Y', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'Y', i+j*10);
+                    ConsCard(i/2+1, d->deck[i+j*10], 'Y', i+j*10, 0, 0);
             }
             else{
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'W', i+j*10);
+                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'W', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'W', i+j*10);
+                    ConsCard(i/2+1, d->deck[i+j*10], 'W', i+j*10, 0, 0);
             }
         }
         num++;

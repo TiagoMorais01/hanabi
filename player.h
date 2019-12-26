@@ -13,6 +13,7 @@ void lessCardsP(Player);
 void plusCardsP(Player);
 void swapN(int *, int *);
 int playCard(Pilha, Player, int, int);
+void setNCplayer(Player, int);
 void pushToLeft(Player);
 void setAllVisCP(Player);
 void setAllVisNP(Player);

@@ -286,6 +286,11 @@ int playCard(Pilha pi, Player p, int posC, int np){
     return f;
 }
 
+void setNCplayer(Player p, int ncrds){
+    p->ncards = ncrds;
+}
+
+//Puxa as cartas para a mão esquerda do jogador
 void pushToLeft(Player p){
     int i = 0;
     for (i = 0; i < p->ncards; i++){
@@ -296,10 +301,12 @@ void pushToLeft(Player p){
     }
 }
 
+//decrementa a variavel que contem o numero de cartas do jogador
 void lessCardsP(Player p){
     p->ncards--;
 }
 
+//incrementa a variavel que contem o numero de cartas do jogador
 void plusCardsP(Player p){
     p->ncards++;
 }

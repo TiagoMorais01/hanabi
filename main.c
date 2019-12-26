@@ -14,6 +14,117 @@
 #include "ShowCard.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
+void saveGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
+    FILE *salvar;
+    if ((salvar = fopen("save.ha","w")) != NULL){
+        system("clear");
+        fprintf(salvar, "Gervásio\n%d\n", getNCP(ai));
+        int i = 0;
+        for(i = 0; i < getNCP(ai); i++){
+            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCard(ai, i)), getCc(getCard(ai, i)), getCpos(getCard(ai, i)), getCvn(getCard(ai, i)), getCvc(getCard(ai, i)));
+        }
+
+        fprintf(salvar, "%s%d\n", getnome(jog), getNCP(jog));
+        
+        for(i = 0; i < getNCP(jog); i++){
+            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCard(jog, i)), getCc(getCard(jog, i)), getCpos(getCard(jog, i)), getCvn(getCard(jog, i)), getCvc(getCard(jog, i)));
+        }
+        
+        fprintf(salvar, "%d\n", nc);
+        
+        for(i = 1; i <= nc ; i++){
+            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCa(deckM, i)), getCc(getCa(deckM, i)), getCpos(getCa(deckM, i)), getCvn(getCa(deckM, i)), getCvc(getCa(deckM, i)));
+        }
+        
+        fprintf(salvar, "%d\n", np);
+
+        for(i = 0; i < np ; i++){
+            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCpilha(pi, i)), getCc(getCpilha(pi, i)), getCpos(getCpilha(pi, i)), getCvn(getCpilha(pi, i)), getCvc(getCpilha(pi, i)));
+        }
+
+        fprintf(salvar, "%d\n", nt);
+
+        for(i = 0; i < nt ; i++){
+            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCa(trash, i)), getCc(getCa(trash, i)), getCpos(getCa(trash, i)), getCvn(getCa(trash, i)), getCvc(getCa(trash, i)));
+        }
+
+        fprintf(salvar, "%d\n", lives);
+        fprintf(salvar, "%d", tips);
+    }
+    fclose(salvar);
+}
+
+void loadGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int *lives, int *tips, int *nc, int *nt, int *np){
+    FILE *load;
+    if((load = fopen("save.ha", "r")) != NULL){
+        char nome[20];
+        int i = 0;
+        int k = 0;
+        int num = 0;
+        int pos = 0;
+        int vc = 0;
+        int vn = 0;
+        char c;
+        
+        fscanf(load, "%s", nome);
+        
+        ai = newPlayer(nome);
+        
+        fscanf(load, "%d", &k);
+
+        setNCplayer(ai, k);
+
+        for (i = 0; i < k; i++){
+            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
+            printf("NUM: %d C: %c POS: %d VN: %d VC: %d\n\n", num, c, pos, vn, vc);
+            ConsCard(getCard(ai, i), num, c, pos, vn, vc);
+        }
+
+        fscanf(load, "%s", nome);
+        
+        jog = newPlayer(nome);
+        
+        fscanf(load, "%d", &k);
+
+        setNCplayer(jog, k);
+
+        for (i = 0; i < k; i++){
+            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
+            ConsCard(getCard(jog, i), num, c, pos, vn, vc);
+        }
+
+        fscanf(load, "%d", &k);
+
+        (*nc) = k;
+
+        for (i = 0; i < k; i++){
+            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
+            ConsCard(getCa(deckM, i), num, c, pos, vn, vc);
+        }
+
+        fscanf(load, "%d", &k);
+
+        (*np) = k;
+
+        for (i = 0; i < k; i++){
+            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
+            ConsCard(getCpilha(pi, i), num, c, pos, vn, vc);
+        }
+
+        fscanf(load, "%d", &k);
+
+        (*nt) = k;
+
+        for (i = 0; i < k; i++){
+            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
+            ConsCard(getCa(trash, i), num, c, pos, vn, vc);
+        }
+
+        fscanf(load, "%d\n%d", lives, tips);
+    }
+    fclose(load);
+}
+
 //Função main do jogo onde ocorre a gestão do jogo
 void newGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -300,7 +411,66 @@ void newGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives,
                     break;
                 }
                 case '0'://Sai do jogo e volta para o menu inicial
-                    r = 0;
+                    gotoxy(0, 18);
+                    printf("                                                 ");
+                    gotoxy(0, 18);
+                    printf("Deseja salvar a partida?");
+                    gotoxy(0, 19);
+                    printf("                                                 ");
+                    gotoxy(0, 19);
+                    printf("S - SIM");
+                    gotoxy(0, 20);
+                    printf("                                                 ");
+                    gotoxy(0, 20);
+                    printf("N - NÃO");
+                    gotoxy(0, 21);
+                    printf("                                                 ");
+                    gotoxy(0, 21);
+                    printf("0 - Voltar para o menu");
+                    gotoxy(0, 22);
+                    printf("                                                 ");
+                    gotoxy(0, 22);
+                    printf("-> ");
+                    gotoxy(0, 23);
+                    printf("                                                 ");
+                    gotoxy(4, 22);
+                    x = getchar();
+                    while (getchar()!='\n');
+                    while (x != 'S' && x != 's' && x != 'N' && x != '0'){
+                        gotoxy(0, 18);
+                        printf("                                                 ");
+                        gotoxy(0, 18);
+                        printf("Essa opção não existe!!!!");
+                        gotoxy(0, 19);
+                        printf("                                                 ");
+                        gotoxy(0, 19);
+                        printf("Deseja salvar a partida?");
+                        gotoxy(0, 20);
+                        printf("                                                 ");
+                        gotoxy(0, 20);
+                        printf("S - SIM");
+                        gotoxy(0, 21);
+                        printf("                                                 ");
+                        gotoxy(0, 21);
+                        printf("N - NÃO");
+                        gotoxy(0, 22);
+                        printf("                                                 ");
+                        gotoxy(0, 22);
+                        printf("0 - Voltar para o menu");
+                        gotoxy(0, 23);
+                        printf("                                                 ");
+                        gotoxy(0, 23);
+                        printf("-> ");
+                        gotoxy(4, 23);
+                        x = getchar();
+                        while (getchar()!='\n');
+                    }
+
+                    if (x == 'S' || x == 's'){
+                        r = 0;
+                        saveGame(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                    }
+
                     break;
                 default:
                     gotoxy(0, 24);
@@ -393,14 +563,18 @@ void main(){
         gotoxy((w/2) - 13,5);
         printf("            ");
         gotoxy((w/2) - 13,5);
-        printf("2 - Tutorial");
+        printf("2 - Load Game");
         gotoxy((w/2) - 13,6);
         printf("            ");
         gotoxy((w/2) - 13,6);
+        printf("3 - Tutorial");
+        gotoxy((w/2) - 13,7);
+        printf("            ");
+        gotoxy((w/2) - 13,7);
         printf("0 - Sair");
-        gotoxy((w/2) - 13,7);
+        gotoxy((w/2) - 13,8);
         printf("            ");
-        gotoxy((w/2) - 13,7);
+        gotoxy((w/2) - 13,8);
         printf("-> ");
         c = getchar();
         while (getchar()!='\n');
@@ -432,8 +606,6 @@ void main(){
                     printf("            ");
                     gotoxy((w/2) - 13,6);
                     printf("            ");
-                    gotoxy((w/2) - 25,6);
-                    printf("O nome deve conter no maximo 16 caracteres\n");
                     gotoxy((w/2) - 13,7);
                     printf("            ");
                     gotoxy((w/2) - 13,8);
@@ -462,6 +634,28 @@ void main(){
                 #endif
                 break;
             case '2':
+                if (fopen("save.ha", "r")){
+                    deckM = newDeck();//Inicia um array deck
+                    trash = newDeck();//Inicia um array trash
+                    pilha = newPilha();//Inicia um array para armazenar as cartas jogadas para a mesa
+                    loadGame(deckM, trash, ai, jog, pilha, &lives, &tips, &nc, &nt, &np);
+                    free(deckM);
+                    free(trash);
+                    freeP(ai);
+                    freeP(jog);
+                    freePi(pilha);
+                }
+                else{
+                    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+                    system("cls");
+                    #else
+                        system("clear");
+                    #endif
+                    gotoxy((w/2) - 13,8);
+                    printf("Nao existe essa opcao!!!\n");
+                }
+                break;
+            case '3':
                 tutorial();
                 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
                     system("cls");

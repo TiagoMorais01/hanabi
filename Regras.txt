@@ -3,7 +3,7 @@ Neste jogo temos 3 opções :
 
 	Jogar uma Carta:
 
-		Ao jogar uma carta se esta for a correta vai para o montinho que lhe pertence por cores se esta não for jogada corretamente a carta vai para o lixo e os jogadores perdem uma vida.
+		Ao jogar uma carta, se esta for a correta, vai para o montinho que lhe pertence por cores. Se esta não for jogada corretamente a carta vai para o lixo e os jogadores perdem uma vida.
 
 	Discartar uma Carta:
 
@@ -11,7 +11,7 @@ Neste jogo temos 3 opções :
 
 	Dar um dica:
 
-		O jogador dá uma dica ao outro sobre as cartas que este jogador tem na mão: As pistas podem ser dadas por números ou cores, sendo assim tira-se uma pista.
+		O jogador dá uma dica ao outro jogador sobre as cartas que este jogador tem na mão: As pistas podem ser dadas por números ou cores, gastando uma pista.
 
 
 	O jogo começa com 3 vidas e 8 pistas. 

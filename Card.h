@@ -24,7 +24,7 @@ void setCpilha(Pilha, Card, int, int*);
 void DeckNull(Deck, int);
 void shuffleDeck(Card*, int);
 void createDeck(Deck);
-void ConsCard(int, Card, char, int);
+void ConsCard(Card, int, char, int, int, int);
 void giveTipN(Card*, int);
 void giveTipC(Card*, char);
 void printCards(Deck);
