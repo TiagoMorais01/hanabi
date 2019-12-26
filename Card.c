@@ -5,7 +5,7 @@
 #include <time.h>
 #include "Card.h"
 
-struct card{
+struct _card{
     int num;
     char color;
     int visibleC;//cor visivel
@@ -13,17 +13,17 @@ struct card{
     int pos;//posição da carta onde se encontra atualmente
 };
 
-struct deck {
+struct _deck {
     Card deck[50];
 };
 
-struct pilha {
+struct _pilha {
     Card pilha[25];
 };
 
 //Aloca memoria para cria uma nova carta
 Card newCard(){
-    return (Card) malloc(sizeof(struct card));
+    return (Card) malloc(sizeof(struct _card));
 }
 
 //Define a posião da carta
@@ -45,27 +45,31 @@ Card grCa(Deck d, int nc){
 }
 
 //Função para obter uma carta da pilha
-Card getPilha(Pilha p, int np){
+Card getCpilha(Pilha p, int np){
     return p->pilha[np];
 }
 
 //Função para criar um novo Deck
 Deck newDeck(){
     int i = 0;
-    Deck d = (Deck) malloc(sizeof(struct deck) * 1);
-    for(i = 0; i < 50; i++) {
-        d->deck[i] = NULL;
-    }
+    Deck d = (Deck) malloc(sizeof(struct _deck));
+	if (d) {
+		for (i = 0; i < 50; i++) {
+			d->deck[i] = NULL;
+		}
+	}
     return d;
 }
 
 //Função para criar um novo Pilha
 Pilha newPilha(){
     int i = 0;
-    Pilha p = (Pilha) malloc(sizeof(struct pilha) * 1);
-    for(i = 0; i < 25; i++) {
-        p->pilha[i] = NULL;
-    }
+    Pilha p = (Pilha) malloc(sizeof(struct _pilha));
+	if (p) {
+		for (i = 0; i < 25; i++) {
+			p->pilha[i] = NULL;
+		}
+	}
     return p;
 }
 
@@ -110,6 +114,15 @@ int checkChar(char c, char arr[], int n){
     return v;
 }
 
+//Compara duas cartas
+int compareCardC(Card c1, Card c2){
+    return (c1->color == c2->color) ? 1 : 0;
+}
+
+int compareCardN(Card c1, Card c2){
+    return (c1->num + 1 == c2->num) ? 1 : 0;
+}
+
 //Funcção para obter o numero de uma carta
 int getCnum(Card c){
     return c->num;
@@ -133,6 +146,14 @@ int getCvn(Card c){
 //Função para obter a cor de uma carta
 char getCc(Card c){
     return c->color;
+}
+
+//Atribui uma carta à pilha
+void setCpilha(Pilha pi, Card c, int np, int *tips){
+    c->pos = np;
+    pi->pilha[np] = c;
+    if (c->num == 5 && (*tips) < 8)
+        (*tips)++;
 }
 
 //Função para definir todas as cores visiveis das cartas
@@ -164,14 +185,16 @@ void shuffleDeck(Card *cardN, int n){
     if (n > 1) {
         time_t t;
         srand((unsigned) time(&t));
-        size_t i = 0;
+        int i = 0;
+		int j = 0;
+		Card tc;
         for (i = 0; i < n - 1; i++) {
             //Divido o RAND_MAX pelo numero de cartas menos a posicao do array + 1
             //Somo a posicao do array ao rand() e depois divido pelo comentario acima
-            size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
-            Card t = cardN[j];
+            j = i + rand() / (RAND_MAX / (n - i) + 1);
+            tc = cardN[j];
             cardN[j] = cardN[i];
-            cardN[i] = t;
+            cardN[i] = tc;
         }
     }
 }
