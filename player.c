@@ -10,16 +10,20 @@
 struct player{
     char nome[20];
     Card cards[5];
+    int ncards;
 };
 
 //Função para criar um jogador
 Player newPlayer(char *nomeN){
     Player p = (Player) malloc(sizeof(struct player));
     int i = 0;
-    for(i = 0; i < 5; i++){
-        p->cards[i] = NULL;
-    }
-    strcpy(p->nome, nomeN);
+	if (p){
+		for (i = 0; i < 5; i++) {
+			p->cards[i] = NULL;
+		}
+		strcpy(p->nome, nomeN);
+		p->ncards = 5;
+	}
     return p;
 }
 
@@ -40,17 +44,6 @@ int tamNpl(Player p){
     return strlen(p->nome);
 }
 
-//Função para obter o numero de cartas de cada jogador
-int contC(Player p){
-    int n = 0;
-    int i = 0;
-    for(i = 0; i < 5; i++){
-        if(p->cards[i] != NULL)
-            n++;
-    }
-    return n;
-}
-
 //Função que faz o jogador escolher um numero para dar a dica
 int selNum(Player p, int play){
     int n = 0;
@@ -59,7 +52,7 @@ int selNum(Player p, int play){
     int j = 0;
     char val = 0;
     //Guarda os numeros disponiveis sem repetição
-    for (i = 0; i < 5; i++){
+    for (i = 0; i < p->ncards; i++){
         if(checkNum( ( (char) getCnum(p->cards[i]) + 48 ), arr, j ) || i == 0){
             arr[j] = getCnum(p->cards[i]);
             j++;
@@ -94,7 +87,8 @@ int selNum(Player p, int play){
     gotoxy(0, 23);
     printf("                                       ");
     gotoxy(4, 21);
-    scanf("%c", &val);
+    val = getchar();
+    while (getchar()!='\n');
 
     while ((checkNum(val, arr, j))){
         
@@ -125,7 +119,8 @@ int selNum(Player p, int play){
         printf("                                       ");
         while (getchar()!='\n');
         gotoxy(4, 22);
-        scanf("%c", &val);
+        val = getchar();
+        while (getchar()!='\n');
     }
     
     if (((int)val)-48){
@@ -179,7 +174,8 @@ int selCor(Player p, int play){
     gotoxy(0, 23);
     printf("                                       ");
     gotoxy(4, 21);
-    scanf("%s", &val);
+    val = getchar();
+    while (getchar()!='\n');
     
     while (checkChar(val, arr, j)){
 
@@ -210,7 +206,8 @@ int selCor(Player p, int play){
         printf("                                       ");
         gotoxy(4, 22);
         while (getchar()!='\n');
-        scanf("%s", &val);
+        val = getchar();
+        while (getchar()!='\n');
     }
 
     if (val != '0'){
@@ -221,6 +218,10 @@ int selCor(Player p, int play){
         return 0;
     }
     
+}
+
+int getNCP(Player p){
+    return p->ncards;
 }
 
 //Função para trocar inteiros num array
@@ -265,21 +266,51 @@ char *getnome(Player p){
     return (p->nome);
 }
 
-//Função para libertar a memorio das variveis do tipo jogador
-void freeP(Player p){
+//Jogar uma carta para a mesa
+int playCard(Pilha pi, Player p, int posC, int np){
     int i = 0;
-    for(i = 0; i < 5; i++){
-        if(p->cards != NULL)
-            free(p->cards[i]);
+    int f = 0;
+    int haveColor = 0;
+    for (i = 0; (i < np) && !f; i++){
+        if (compareCardC(getCpilha(pi, i), p->cards[posC])){
+            haveColor = 1;
+            if (compareCardN(getCpilha(pi, i), p->cards[posC]))
+                f = 1;
+        }
     }
-    free(p);
+
+    if ((haveColor == 0) && (getCnum(p->cards[posC]) == 1)){
+        f = 1;
+    }
+    
+    return f;
+}
+
+void pushToLeft(Player p){
+    int i = 0;
+    for (i = 0; i < p->ncards; i++){
+        if (p->cards[i] == NULL){
+            p->cards[i] = p->cards[i+1];
+            p->cards[i+1] = NULL;
+        }
+    }
+}
+
+void lessCardsP(Player p){
+    p->ncards--;
+}
+
+void plusCardsP(Player p){
+    p->ncards++;
 }
 
 //Função para definir todas as cores do jogador visiveis
 void setAllVisCP(Player p){
     int i = 0;
     for (i = 0; i < 5; i++){
-        setAllVisCC(p->cards[i]);
+        if (p->cards[i] != NULL){
+            setAllVisCC(p->cards[i]);
+        }
     }
 }
 
@@ -287,7 +318,9 @@ void setAllVisCP(Player p){
 void setAllVisNP(Player p){
     int i = 0;
     for (i = 0; i < 5; i++){
-        setAllVisNC(p->cards[i]);
+        if (p->cards[i] != NULL){
+            setAllVisNC(p->cards[i]);
+        }
     }
 }
 
@@ -342,4 +375,14 @@ void printCp(Player p){
     for (i = 0; i < 5; i++){
         printf("Card %d - C: %c N: %d P: %d VC: %d VN: %d\n", i+1, getCc(p->cards[i]), getCnum(p->cards[i]), getCpos(p->cards[i]), getCvc(p->cards[i]), getCvn(p->cards[i]));
     }
+}
+
+//Função para libertar a memorio das variveis do tipo jogador
+void freeP(Player p){
+    int i = 0;
+    for(i = 0; i < 5; i++){
+        if(p->cards != NULL)
+            free(p->cards[i]);
+    }
+    free(p);
 }
