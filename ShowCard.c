@@ -77,7 +77,7 @@ void drawCard(int x, int y, int val){
 }
 
 //Função para desenhar uma carta tracejada para quando não tiver nenhuma carta na pilha
-void drawCardI(int x, int y, int val){
+void drawCardI(int x, int y, int val, int w){
     gotoxy(x, y);
     printf("%lc%lc%lc%lc%lc%lc%lc", 0x256D, 0x2504, 0x2504, 0x2504, 0x2504, 0x2504, 0x256E);
     gotoxy(x, y+1);
@@ -94,7 +94,7 @@ void drawCardI(int x, int y, int val){
         }
     }
     else{
-        printf("%lc     %lc", 0x2506, 0x2506);
+        (w) ? printf("%lc  0  %lc", 0x2506, 0x2506) : printf("%lc     %lc", 0x2506, 0x2506);
     }
 
     gotoxy(x, y+2);
@@ -136,8 +136,8 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
-//Função responsável por desenhar a mesa de jogo(obtem: O Dekc, a lixeira, o jogador e a ai, a pilha, o numero de vidas, as dicas, o numero de cartas no dekc, na lixeira e na pilha)
-void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips , int nc, int nt, int np){
+//Função responsável por desenhar a mesa de jogo(obtem: O Deck, a lixeira, o jogador e a ai, a pilha, o numero de vidas, as dicas, o numero de cartas no dekc, na lixeira e na pilha)
+void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips , int nc, int nt, int np){
     
     int w, h;
     int col,row;
@@ -164,7 +164,10 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
     int tamNjog = tamNpl(jog);
     
     //Desenhar uma carta para o Deck
-    drawCard(0,1,nc);
+    if(nc > 0)
+        drawCard(0,1,nc);
+    else
+        drawCardI(0, 1, 0, 1);
     
     //Escrever o nome da AI
     gotoxy((w/2) + (tamNai/2)-11,3);
@@ -192,59 +195,64 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
     */
 
     //Mão Gervásio(AI)
-    setColor(getCc(getCard(ai, 0)));
-    drawCard((w/2)-6*2-10, 5, getCnum(getCard(ai, 0)));
-    setColor(getCc(getCard(ai, 1)));
-    drawCard((w/2)-14, 5, getCnum(getCard(ai, 1)));
-    setColor(getCc(getCard(ai, 2)));
-    drawCard((w/2)-6, 5, getCnum(getCard(ai, 2)));
-    setColor(getCc(getCard(ai, 3)));
-    drawCard((w/2)+2, 5, getCnum(getCard(ai, 3)));
-    setColor(getCc(getCard(ai, 4)));
-    drawCard((w/2)+10, 5, getCnum(getCard(ai, 4)));
-
+    for (i = 0; i < getNCP(ai); i++){
+        setColor(getCc(getCard(ai, i)));
+        drawCard((w/2)-6*2+i*8-10, 5, getCnum(getCard(ai, i)));
+    }
+    
     //Jogo(Pilha)
-    sortPilha(pi, 0, np - 1);//Função para ordenar a pilha
     int ac = 0;
     int coresI[5] = {0, 0, 0, 0 ,0};
     char cores[6] = {'B','G','R','W','Y'};
     int maior = 0;
     i = 0;
-    
+    int j = 0;
     //Imprimir as cartas por ordem de cor de numero
-    while(i < np){
-        if (getPilha(pi, i) != NULL){
-            if(cores[ac] == getCc(getPilha(pi, i))){
-                if (getCnum(getPilha(pi, i)) > maior){
-                    maior = getCnum(getPilha(pi, i));
-                }
-                i++;
-            }
-            else{
-                if (maior != 0){
-                    setColor(cores[ac]);
-                    drawCard((w/2)-6*2+ac*8-10, 9, maior);
-                    coresI[ac] = 1;
+    
+    setAllVisNP(jog);
+    setAllVisCP(jog);
+    
+    while(i <= np){
+        if(i < np){
+            if (getCpilha(pi, i) != NULL){
+                if(cores[ac] == getCc(getCpilha(pi, i))){
+                    if (getCnum(getCpilha(pi, i)) > maior){
+                        maior = getCnum(getCpilha(pi, i));
+                    }
+                    i++;
                 }
                 else{
-                    setColor(cores[ac]);
-                    drawCardI((w/2)-6*2+ac*8-10, 9, 0);
+                    if (maior != 0){
+                        setColor(cores[ac]);
+                        drawCard((w/2)-6*2+ac*8-10, 9, maior);
+                        coresI[ac] = 1;
+                        maior = 0;
+                    }
+                    else{
+                        setColor(cores[ac]);
+                        drawCardI((w/2)-6*2+ac*8-10, 9, 0, 0);
+                    }
+                    ac++;
                 }
-                ac++;
+            }
+            else{
+                setColor(cores[ac]);
+                drawCardI((w/2)-6*2+ac*8-10, 9, 0, 0);
             }
         }
         else{
             setColor(cores[ac]);
-            drawCardI((w/2)-6*2+ac*8-10, 9, 0);
+            drawCard((w/2)-6*2+ac*8-10, 9, maior);
+            coresI[ac] = 1;
+            i++;
         }
     }
-
+    
     for (i = 0; i < 5; i++){
         if (coresI[i] == 0){
             setColor(cores[i]);
-            drawCardI((w/2)-6*2+i*8-10, 9, 0);
+            drawCardI((w/2)-6*2+i*8-10, 9, 0, 0);
         }
-        
     }
 
     //Função para ordenar a lixeira(trash) por onde de cor e crescente
@@ -276,52 +284,27 @@ void ShowCardAI(Deck deck, Deck trash, Player ai, Player jog, Pilha pi, int live
             break;
     }
 
-
     //Mão player
-    selColor(jog, 0);
-    if(getCvn(getCard(jog, 0))){//Um if para verificar se o numero da carta está visível para imprimir ou não
-        drawCardP((w/2)-6*2-10, 13, getCnum(getCard(jog, 0)));
-    }
-    else{
-        drawCardP((w/2)-6*2-10, 13, 0);
-    }
-    
-    selColor(jog, 1);
-    if(getCvn(getCard(jog, 1))){
-        drawCardP((w/2)-14, 13, getCnum(getCard(jog, 1)));
-    }
-    else{
-        drawCardP((w/2)-14, 13, 0);
-    }
-    
-    selColor(jog, 2);
-    if(getCvn(getCard(jog, 2))){
-        drawCardP((w/2)-6, 13, getCnum(getCard(jog, 2)));
-    }
-    else{
-        drawCardP((w/2)-6, 13, 0);
-    }
-
-    selColor(jog, 3);
-    if(getCvn(getCard(jog, 3))){
-        drawCardP((w/2)+2, 13, getCnum(getCard(ai, 3)));
-    }
-    else{
-        drawCardP((w/2)+2, 13, 0);
-    }
-
-    selColor(jog, 4);
-    if(getCvn(getCard(jog, 4))){
-        drawCardP((w/2)+10, 13, getCnum(getCard(ai, 4)));
-    }
-    else{
-        drawCardP((w/2)+10, 13, 0);
+    for (i = 0; i < getNCP(jog); i++){
+        if (getCard(jog, 0) != NULL){
+            selColor(jog, i);
+            if(getCvn(getCard(jog, i))){//Um if para verificar se o numero da carta está visível para imprimir ou não
+                drawCardP((w/2)-6*2+i*8-10, 13, getCnum(getCard(jog, i)));
+            }
+            else{
+                drawCardP((w/2)-6*2+i*8-10, 13, 0);
+            }
+        }
     }
 
     //Atribui a cor branca e imprime as posições de cada respetiva carta
     setColor('W');
     gotoxy((w/2)-6*2-10,15);
-    printf("  (1)     (2)     (3)     (4)     (5)   \n");
+    for (i = 0; i < getNCP(jog); i++){
+        printf("  (%d)   ", i+1);
+    }
+    printf("\n");
+    
     if(tamNjog > 4){
         gotoxy((w/2)+7-(tamNjog/2)-10, 17);
         printf("%s", getnome(jog));
