@@ -14,8 +14,8 @@
 #include "ShowCard.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
-void PlayAI(){
-    
+void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
+
 }
 
 void saveGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np, int play){
@@ -418,6 +418,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
             }
         }
         else{//Vez da AI
+            PlayAI(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);
             play = 1;
         }
     }
