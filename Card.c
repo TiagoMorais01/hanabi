@@ -99,11 +99,10 @@ int checkNum(char val, int arr[], int n){
 //Função para verificar se é um carater e se for ver se esse caracter está dentro do array que tem os caracteres das cartas disponiveis para dar a dica
 int checkChar(char c, char arr[], int n){
     int v = 1;
-    if (isdigit(c) && ((int)c - 48) == 0)
+    if (isdigit(c) && (((int)c - 48) == 0))
         v = 0;
     else{
         int i = 0;
-        c = toupper(c);
         for (i = 0; i < n; i++){
             if(c == arr[i]){
                 v = 0;
@@ -148,12 +147,18 @@ char getCc(Card c){
     return c->color;
 }
 
+void setCpos(Card c, int i){
+    c->pos = i;
+}
+
+//Atribuir uma carta a um deck(trash)
+void setCard(Deck dt, Card c, int i){
+    dt->deck[i] = c;
+}
+
 //Atribui uma carta à pilha
-void setCpilha(Pilha pi, Card c, int np, int *tips){
-    c->pos = np;
-    pi->pilha[np] = c;
-    if (c->num == 5 && (*tips) < 8)
-        (*tips)++;
+void setCpilha(Pilha pi, Card c, int i){
+    pi->pilha[i] = c;
 }
 
 //Função para definir todas as cores visiveis das cartas
@@ -171,7 +176,7 @@ void DeckNull(Deck d, int nc){
     d->deck[nc-1] = NULL;
 }
 
-//Função para construir uma carta
+//Função para atribuir valores a uma carta
 void ConsCard(Card ca, int n, char c, int posN, int vn, int vc) {
     ca->num = n;
     ca->color = c;
@@ -208,33 +213,33 @@ void createDeck(Deck d){
             d->deck[i+j*10] = newCard();
             if(num == 1){
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'B', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+(i%2), 'B', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'B', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+1, 'B', i+j*10, 0, 0);
             }
             else if(num == 2){
                 if(i/2+1 != 1)
-                    ConsCard((i/2)+(i%2), d->deck[i+j*10], 'R', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], (i/2)+(i%2), 'R', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'R', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+1, 'R', i+j*10, 0, 0);
             }
             else if(num == 3){
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'G', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+(i%2), 'G', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'G', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+1, 'G', i+j*10, 0, 0);
             }
             else if(num == 4){
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'Y', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+(i%2), 'Y', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'Y', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+1, 'Y', i+j*10, 0, 0);
             }
             else{
                 if(i/2+1 != 1)
-                    ConsCard(i/2+(i%2), d->deck[i+j*10], 'W', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+(i%2), 'W', i+j*10, 0, 0);
                 else
-                    ConsCard(i/2+1, d->deck[i+j*10], 'W', i+j*10, 0, 0);
+                    ConsCard(d->deck[i+j*10], i/2+1, 'W', i+j*10, 0, 0);
             }
         }
         num++;

@@ -32,7 +32,7 @@ Card getCard(Player p, int i){
     return p->cards[i];
 }
 
-//Função para obter e retira uma carta do jogador
+//Função para obter e retirar uma carta do jogador
 Card grCard(Player j, int i){
     Card aux = j->cards[i];
     j->cards[i] = NULL;
@@ -176,6 +176,8 @@ int selCor(Player p, int play){
     gotoxy(4, 21);
     val = getchar();
     while (getchar()!='\n');
+
+    val = toupper(val);
     
     while (checkChar(val, arr, j)){
 
@@ -205,9 +207,9 @@ int selCor(Player p, int play){
         gotoxy(0, 23);
         printf("                                       ");
         gotoxy(4, 22);
-        while (getchar()!='\n');
         val = getchar();
         while (getchar()!='\n');
+        val = toupper(val);
     }
 
     if (val != '0'){
@@ -286,8 +288,18 @@ int playCard(Pilha pi, Player p, int posC, int np){
     return f;
 }
 
+void setNPlayer(Player p, char* nomeN){
+    strcpy(p->nome, nomeN);
+}
+
+//Atribuir o numero de cartas que um jogador tem
 void setNCplayer(Player p, int ncrds){
     p->ncards = ncrds;
+}
+
+//Função para atribuir uma carta a um jogador
+void setCPlayer(Player p, Card c, int i){
+    p->cards[i] = c;
 }
 
 //Puxa as cartas para a mão esquerda do jogador
