@@ -125,7 +125,7 @@ int selNum(Player p, int play){
     
     if (((int)val)-48){
         giveTipN(p->cards, ((int)val)-48);//Função que atribui a dica à carta correspondente
-        return 1;
+        return (((int)val)-48);
     }
     else{
         return 0;
@@ -214,7 +214,7 @@ int selCor(Player p, int play){
 
     if (val != '0'){
         giveTipC(p->cards, val);//Função que atribui a dica à carta correspondente
-        return 1;
+        return (((int)val)-48);
     }
     else{
         return 0;
@@ -222,6 +222,7 @@ int selCor(Player p, int play){
     
 }
 
+//retorna o numero de cartas de um jogador
 int getNCP(Player p){
     return p->ncards;
 }

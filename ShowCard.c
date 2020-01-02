@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <locale.h>
 #include <wchar.h>
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -10,6 +11,7 @@
 #endif
 #include "Card.h"
 #include "player.h"
+#include "Log.h"
 #include "ShowCard.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
@@ -136,9 +138,30 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
+void adjustString(int w, int *k, char *exp){
+    int i = 0;
+    int j = (w -((w/2)+6*2+8) + 1);
+    gotoxy((w/2)+6*2+8, 5 + (*k) * 2);
+    if (strlen(exp) > 41){
+        for (i = 0; i < j; i++){
+            printf("%c", exp[i]);
+        }
+        gotoxy((w/2)+6*2+8, 13 + (*k) * 2);
+        (*k)++;
+        char aux[strlen(exp) - 41];
+        memset(aux, '\0', strlen(exp) - 41);
+        memcpy(aux, &exp[41], strlen(exp) - 41);
+        aux[strlen(exp) - 41] = '\0';
+        adjustString(w, k, aux);
+    }
+    else{
+        printf("%s", exp);
+    }
+}
+
 //Função responsável por desenhar a mesa de jogo(obtem: O Deck, a lixeira, o jogador e a ai, a pilha, o numero de vidas, as dicas, o numero de cartas no dekc, na lixeira e na pilha)
-void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips , int nc, int nt, int np){
-    
+void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], int lives, int tips , int nc, int nt, int np){
+
     int w, h;
     int col,row;
     int i = 0;
@@ -175,25 +198,29 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int liv
 
     //Imprimir o numero de dicas e vida
     gotoxy((w/5 - 15), 2);
-    printf("Dicas: %d", tips);
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+        printf("Dicas: %d", tips);
+    #else
+        if(tips != 0){
+            setColor('Y');
+            printf("%lc", 0x1D25);
+            for(i = 1;i < tips; i++)
+                printf(" %lc", 0x1D25);
+        }
+    #endif
 
     gotoxy((w/5-15),3);
-    printf("Vidas: %d", lives);
-    /* Por a funcionar os corações e as dicas unicode e fonts
-    if(tips != 0){
-        gotoxy((w/5 - 15), 2);
-        printf("%lc", 0x26A1);
-        for(i = 1;i < tips; i++)
-            printf(" %lc", 0x26A1);
-    }
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+        printf("Vidas: %d", lives);
+    #else
+        setColor('R');
+        printf("%lc", 0x2665);
+        for(i = 1;i < lives; i++)
+            printf(" %lc", 0x2665);
+    #endif
+
+    setColor('W');
     
-    gotoxy((w/5-15),3);
-    printf("%lc", 0x2764);
-    for(i = 1;i < lives; i++)
-        printf(" %lc", 0x2764);
-
-    */
-
     //Mão Gervásio(AI)
     for (i = 0; i < getNCP(ai); i++){
         setColor(getCc(getCard(ai, i)));
@@ -209,8 +236,8 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int liv
     int maior = 0;
     i = 0;
     int j = 0;
+
     //Imprimir as cartas por ordem de cor de numero
-    
     setAllVisNP(jog);
     setAllVisCP(jog);
     
@@ -257,12 +284,29 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int liv
         }
     }
 
+    //Jogadas
+    setColor('W');
+    char *tmpLog[3];
+    for (i = 0; i < 3; i++){
+        tmpLog[i] = (char*) malloc(200);
+    }
+    int nTmpLog = 0;
+    int k = 0;
+    nTmpLog = getLastThree(log, jog, ai, tmpLog);
+    for (i = 0, k = 0; i < nTmpLog; i++, k++){
+        if(strlen(tmpLog[i]) < (w -((w/2)+6*2+7)+1)){
+            gotoxy((w/2)+6*2+8, 5 + k * 2);//length 42
+            printf("%s", tmpLog[i]);
+        }
+        else{
+            adjustString(w, &k, tmpLog[i]);
+        }
+    }
+
     //Função para ordenar a lixeira(trash) por onde de cor e crescente
-    sortTrash(trash, 0, nt - 1);
-
     char p;
-    int k = 0, l = 0, m = 0;
-
+    int l = 0, m = 0;
+    k = 0;
     //Imprime a lixeira(trash)
     for(i = 0 ; i < nt ; i++, l++){
         Card c = getCa(trash, i+1);
@@ -303,7 +347,7 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int liv
     setColor('W');
     gotoxy((w/2)-6*2-10,15);
     for (i = 0; i < getNCP(jog); i++){
-        printf("  (%d)   ", i+1);
+        printf("  (%d)  ", i+1);
     }
     printf("\n");
     

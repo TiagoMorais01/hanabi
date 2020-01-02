@@ -11,71 +11,51 @@
 #include <time.h>
 #include "Card.h"
 #include "player.h"
+#include "Log.h"
 #include "ShowCard.h"
+#include "AI.h"
+#include "Save.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
-void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
-
-}
-
-void saveGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np, int play){
-    FILE *salvar;
-    if ((salvar = fopen("save.ha","w")) != NULL){
-        system("clear");
-        fprintf(salvar, "Gervásio\n%d\n", getNCP(ai));
-        int i = 0;
-        for(i = 0; i < getNCP(ai); i++){
-            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCard(ai, i)), getCc(getCard(ai, i)), getCpos(getCard(ai, i)), getCvn(getCard(ai, i)), getCvc(getCard(ai, i)));
-        }
-
-        fprintf(salvar, "%s\n%d\n", getnome(jog), getNCP(jog));
-        
-        for(i = 0; i < getNCP(jog); i++){
-            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCard(jog, i)), getCc(getCard(jog, i)), getCpos(getCard(jog, i)), getCvn(getCard(jog, i)), getCvc(getCard(jog, i)));
-        }
-        
-        fprintf(salvar, "%d\n", nc);
-        
-        // <= porque a função getCa e i-1
-        for(i = 1; i <= nc ; i++){
-            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCa(deckM, i)), getCc(getCa(deckM, i)), getCpos(getCa(deckM, i)), getCvn(getCa(deckM, i)), getCvc(getCa(deckM, i)));
-        }
-        
-        fprintf(salvar, "%d\n", np);
-
-        for(i = 0; i < np ; i++){
-            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCpilha(pi, i)), getCc(getCpilha(pi, i)), getCpos(getCpilha(pi, i)), getCvn(getCpilha(pi, i)), getCvc(getCpilha(pi, i)));
-        }
-
-        fprintf(salvar, "%d\n", nt);
-        
-        // <= porque a função getCa e i-1
-        for(i = 1; i <= nt ; i++){
-            fprintf(salvar, "%d, %c, %d, %d, %d\n", getCnum(getCa(trash, i)), getCc(getCa(trash, i)), getCpos(getCa(trash, i)), getCvn(getCa(trash, i)), getCvc(getCa(trash, i)));
-        }
-
-        fprintf(salvar, "%d\n%d\n%d", lives, tips, play);
-    }
-    fclose(salvar);
-}
-
 //Função main do jogo onde ocorre a gestão do jogo
-void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np, int play, int ultimasJ){
+void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], int lives, int tips, int nc, int nt, int np, int play, int ultimasJ){
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
         system("cls");
     #else
         system("clear");
     #endif
-    ShowCardAI(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);//Função que imprime a mesa do jogo
+    ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);//Função que imprime a mesa do jogo
     char mov;
     char x;
     int r = 1;
+    int selnum = 0;
+    int selcor = 0;
+    char aux[10];
+    Card auxC = NULL;
+    if (ultimasJ){
+        r = 0;
+    }
+    else{
+        r = 1;
+    }
     
     //Main loop que faz decorrer o jogo
     while ((r || ultimasJ) && lives != 0){
         
-        if (nc == 0 && r == 1){
-            /* code */
+        if ((nc == 0 && r == 1) || (nc == 0 && r == 0)){
+            if (r != 0){    
+                if (getExp(log, 0)[0] == 'C'){
+                    ultimasJ = play ? 3 : 2;
+                }
+                else if(getExp(log, 0)[0] == 'P'){
+                    ultimasJ = play ? 2 : 3;
+                }
+                r = 0;
+            }
+            else{
+                (ultimasJ > 0) ? ultimasJ-- : 0;
+            }
+            
         }
         
         if (play){//Vez do jogador
@@ -167,14 +147,30 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
                         }
 
                         if (x == '1'){//Dá a dica de um numero
-                            if(selNum(ai, play))
+                            selnum = 0;
+                            if((selnum = selNum(ai, play))){
                                 tips--;
-                            ShowCardAI(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                                aux[0] = 'P';
+                                strcat(aux, "-D-");
+                                aux[4] = (char)selnum + 48;
+                                insertLog(log, aux);
+                            }
+                            selnum = 0;
+                            ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
                         }
                         else if (x == '2'){
-                            if(selCor(ai, play))//Dá a dica de uma cor
+                            selcor = 0;
+                            if((selcor = selCor(ai, play))){//Dá a dica de uma cor
                                 tips--;
-                            ShowCardAI(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                                aux[0] = 'P';
+                                strcat(aux, "-D-");
+                                aux[4] = (char)selcor + 48;
+                                insertLog(log, aux);
+                            }
+                            selcor = 0;
+                            ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
                         }
                     }
                     else{
@@ -236,11 +232,11 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
                     }
                     if (x != '0'){
                         if(playCard(pi, jog, ((int)x)-49, np)){
-                            setCpilha(pi, grCard(jog, ((int)x)-49), np++);
+                            auxC = grCard(jog, ((int)x)-49);
+                            setCpilha(pi, auxC, np++);
                             setCpos(getCpilha(pi, (np - 1)), (np - 1));
                             if (getCnum(getCpilha(pi, (np - 1))) == 5 && tips < 8)
                                 tips++;
-                            
                             lessCardsP(jog);
                             if (nc > 0){
                                 pickCard(jog, grCa(deckM, nc--));//Função que pega uma carta do deck e atribui ao jogador
@@ -249,11 +245,19 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
                             if(getNCP(jog) < 5){
                                 pushToLeft(jog);
                             }
+                            memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                            aux[0] = 'P';
+                            strcat(aux, "-J-");
+                            aux[4] = (char) getCnum(auxC) + 48;
+                            aux[5] = getCc(auxC);
+                            insertLog(log, aux);
+                            auxC = NULL;
                             play = 0;//Passa a vez para a AI
                             sortPilha(pi, 0, np - 1);//Função para ordenar a pilha
                         }
                         else{
-                            gototrash(trash, grCard(jog, ((int)x)-49), nt++);//Função que passa a carta para o descarte
+                            auxC = grCard(jog, ((int)x)-49);
+                            gototrash(trash, auxC, nt++);//Função que passa a carta para o descarte
                             lessCardsP(jog);
                             if (nc > 0){
                                 pickCard(jog, grCa(deckM, nc--));//Função que pega uma carta do deck e atribui ao jogador
@@ -262,10 +266,18 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
                             if(getNCP(jog) < 5){
                                 pushToLeft(jog);
                             }
+                            memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                            aux[0] = 'P';
+                            strcat(aux, "-J-T-");
+                            aux[6] = (char) getCnum(auxC) + 48;
+                            aux[7] = getCc(auxC);
+                            insertLog(log, aux);
+                            auxC = NULL;
+                            sortTrash(trash, 0, nt - 1);
                             lives--;
                             play = 0;//Passa a vez para a AI
                         }
-                        ShowCardAI(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                        ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
                     }
                     break;
                 }
@@ -321,7 +333,8 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
                         }
 
                         if ((x != '0')){
-                            gototrash(trash, grCard(jog, ((int)x)-49), nt++);//Função que passa a carta para o descarte
+                            auxC = grCard(jog, ((int)x)-49);
+                            gototrash(trash, auxC, nt++);//Função que passa a carta para o descarte
                             lessCardsP(jog);
                             if (nc > 0){
                                 pickCard(jog, grCa(deckM, nc--));//Função que pega uma carta do deck e atribui ao jogador
@@ -331,8 +344,16 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
                                 pushToLeft(jog);
                             }
                             tips++;
+                            memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                            aux[0] = 'P';
+                            strcat(aux, "-T-");
+                            aux[4] = (char) getCnum(auxC) + 48;
+                            aux[5] = getCc(auxC);
+                            insertLog(log, aux);
+                            auxC = NULL;
+                            sortTrash(trash, 0, nt - 1);
                             play = 0;//Passa a vez para a AI
-                            ShowCardAI(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);
+                            ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
                         }
                     }
                     else{
@@ -401,13 +422,13 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
 
                     if (x == 'S' || x == 's'){
                         r = 0;
-                        saveGame(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np, play);
+                        saveGame(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np, ultimasJ);
+                        exportLog(log);
                     }
                     else if (x == 'N' || x == 'n'){
                         r = 0;
                     }
                     
-
                     break;
                 default:
                     gotoxy(0, 24);
@@ -418,103 +439,26 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, in
             }
         }
         else{//Vez da AI
-            PlayAI(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np);
+            PlayAI(deckM, trash, ai, jog, pi, log, lives, &tips, &nc, &nt, &np);
             play = 1;
         }
     }
+
+    if (r == 0 && ultimasJ == 0 && nc == 0){
+        FILE* f;
+        if ((f = fopen("save.ha", "r")) != NULL){
+            //delete the file
+            fclose(f);
+        }
+        if ((f = fopen("save.log", "r")) != NULL){
+            //delete the file
+            fclose(f);
+        }
+
+    }
+    
+
     return;
-}
-
-void loadGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int lives, int tips, int nc, int nt, int np){
-    FILE *load;
-    if((load = fopen("save.ha", "r")) != NULL){
-        char nome[20];
-        int i = 0;
-        int k = 0;
-        int num = 0;
-        int pos = 0;
-        int vc = 0;
-        int vn = 0;
-        char c;
-        Card crd = NULL;
-        int play = 0;
-        lives = 3;
-        tips = 8;
-        nc = 40;
-        nt = 0;
-        np = 0;
-        int ultimasJ = 0;
-        
-        fscanf(load, "%s", nome);
-        
-        setNPlayer(ai, nome);
-        
-        fscanf(load, "%d", &k);
-
-        setNCplayer(ai, k);
-
-        for (i = 0; i < k; i++){
-            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
-            crd = newCard();
-            ConsCard(crd, num, c, pos, vn, vc);
-            setCPlayer(ai, crd, i);
-        }
-
-        fscanf(load, "%s", nome);
-        
-        setNPlayer(jog, nome);
-        
-        fscanf(load, "%d", &k);
-        
-        setNCplayer(jog, k);
-        
-        for (i = 0; i < k; i++){
-            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
-            crd = newCard();
-            ConsCard(crd, num, c, pos, vn, vc);
-            setCPlayer(jog, crd, i);
-        }
-        
-        fscanf(load, "%d", &k);
-        
-        nc = k;
-        
-        for (i = 0; i < k; i++){
-            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
-            //printf("NUM: %d C: %c POS: %d VN: %d VC: %d I: %d\n\n", num, c, pos, vn, vc, i);
-            crd = newCard();
-            ConsCard(crd, num, c, pos, vn, vc);
-            setCard(deckM, crd, i);
-        }
-        
-        fscanf(load, "%d", &k);
-
-        np = k;
-        
-        for (i = 0; i < k; i++){
-            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
-            crd = newCard();
-            ConsCard(crd, num, c, pos, vn, vc);
-            setCpilha(pi, crd, i);
-        }
-        
-        fscanf(load, "%d", &k);
-
-        nt = k;
-        
-        for (i = 0; i < k; i++){
-            fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
-            crd = newCard();
-            ConsCard(crd, num, c, pos, vn, vc);
-            setCard(trash, crd, i);
-        }
-        
-        fscanf(load, "%d\n%d\n%d", &lives, &tips, &play);
-
-        fclose(load);
-
-        init(deckM, trash, ai, jog, pi, lives, tips, nc, nt, np, play, ultimasJ);
-    }    
 }
 
 //Função com as regras e como se joga
@@ -557,6 +501,7 @@ void main(){
     Player ai = NULL;
     Player jog = NULL;
     Pilha pilha = NULL;
+    Log *log = NULL;
     int lives = 0;
     int tips = 0;
     int nc = 0;
@@ -654,6 +599,7 @@ void main(){
                 deckM = newDeck();//Inicia um array deck
                 trash = newDeck();//Inicia um array trash
                 pilha = newPilha();//Inicia um array para armazenar as cartas jogadas para a mesa
+                log = newLog();//Inicia um array para armazenar as jogadas dos jogadores
                 lives = 3;
                 tips = 8;
                 nc = 50;
@@ -664,7 +610,7 @@ void main(){
                 play = rand() % 2;//Escolhe a sorte qual jogardor vai começar
                 createDeck(deckM);//Função que preenche o Deck
                 dealCards(jog, ai, deckM, &nc);//Função que distribui as cartas pelos jogadores
-                init(deckM, trash, ai, jog, pilha, lives, tips, nc, nt, np, play, ultimasJ);//Função do jogo
+                init(deckM, trash, ai, jog, pilha, log, lives, tips, nc, nt, np, play, ultimasJ);//Função do jogo
                 /* Apaga as variaveis da memoria */
                 lives = 3;
                 tips = 8;
@@ -683,36 +629,50 @@ void main(){
                     system("clear");
                 #endif
                 break;
-            case '2':
-                if (fopen("save.ha", "r")){
-                    ai = newPlayer("");//Cria a AI
-                    jog = newPlayer("");//Cria a estrutura jogador
-                    deckM = newDeck();//Inicia um array deck
-                    trash = newDeck();//Inicia um array trash
-                    pilha = newPilha();//Inicia um array para armazenar as cartas jogadas para a mesa
-                    loadGame(deckM, trash, ai, jog, pilha, lives, tips, nc, nt, np);
-                    free(deckM);
-                    free(trash);
-                    freeP(ai);
-                    freeP(jog);
-                    freePi(pilha);
-                    /* ------------------------- */
-                    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+                case '2':{
+                    FILE *f, *f2;
+                    if ((f = fopen("save.ha", "r")) != NULL && (f2 = fopen("save.log", "r")) != NULL){
+                        ai = newPlayer("");//Cria a AI
+                        jog = newPlayer("");//Cria a estrutura jogador
+                        deckM = newDeck();//Inicia um array deck
+                        trash = newDeck();//Inicia um array trash
+                        pilha = newPilha();//Inicia um array para armazenar as cartas jogadas para a mesa
+                        log = newLog();//Inicia um array para armazenar as jogadas dos jogadores
+                        fclose(f);
+                        fclose(f2);
+                        loadGame(deckM, trash, ai, jog, pilha, &lives, &tips, &nc, &nt, &np, &ultimasJ);
+                        loadLog(log);
+                        play = 1;
+                        init(deckM, trash, ai, jog, pilha, log, lives, tips, nc, nt, np, play, ultimasJ);
+                        free(deckM);
+                        free(trash);
+                        freeP(ai);
+                        freeP(jog);
+                        freePi(pilha);
+                        lives = 3;
+                        tips = 8;
+                        nc = 50;
+                        nt = 0;
+                        np = 0;
+                        ultimasJ = 0;
+                        /* ------------------------- */
+                        #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+                            system("cls");
+                        #else
+                            system("clear");
+                        #endif
+                    }
+                    else{
+                        #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
                         system("cls");
-                    #else
-                        system("clear");
-                    #endif
+                        #else
+                            system("clear");
+                        #endif
+                        gotoxy((w/2) - 13,9);
+                        printf("Não existe um jogo gravado!!!\n");
+                    }
+                    break;
                 }
-                else{
-                    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-                    system("cls");
-                    #else
-                        system("clear");
-                    #endif
-                    gotoxy((w/2) - 13,9);
-                    printf("Não existe um jogo gravado!!!\n");
-                }
-                break;
             case '3':
                 tutorial();
                 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
