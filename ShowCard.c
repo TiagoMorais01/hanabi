@@ -238,8 +238,8 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     int j = 0;
 
     //Imprimir as cartas por ordem de cor de numero
-    setAllVisNP(jog);
-    setAllVisCP(jog);
+    //setAllVisNP(jog);
+    //setAllVisCP(jog);
     
     while(i <= np){
         if(i < np){

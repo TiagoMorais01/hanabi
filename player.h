@@ -2,11 +2,14 @@ typedef struct player* Player;//Criar uma variavel global para que a estrutura j
 
 Player newPlayer(char *);
 Card getCard(Player, int);
+Card* getCards(Player);
 Card grCard(Player, int);
 int tamNpl(Player);
 int selNum(Player, int);
 int selCor(Player, int);
 int getNCP(Player);
+int getLowerCard(Player);
+int cardsAlone(Player, int, char);
 int partition (int*, int, int);
 char *getnome(Player);
 void lessCardsP(Player);

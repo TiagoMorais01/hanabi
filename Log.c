@@ -194,8 +194,162 @@ int getLastThree(Log log[], Player p, Player ai, char *tmpLog[]){
                 }
             }
         }
-        else if(aux[0] == 'A'){
-            /* code */
+        else if(aux[0] == 'C'){
+            if (aux[1] == '-' && aux[2] == 'D'){
+                if (aux[3] == '-' && (aux[4] > '0' && aux[4] < '6')){
+                    strcpy(tmpLog[j], "O Gervásio");
+                    strcat(tmpLog[j], " indicou a(s) carta(s) com o número");
+                    switch (aux[4]){
+                        case '1':{
+                            strcat(tmpLog[j], " 1.");
+                            break;
+                        }
+                        case '2':{
+                            strcat(tmpLog[j], " 2.");
+                            break;
+                        }
+                        case '3':{
+                            strcat(tmpLog[j], " 3.");
+                            break;
+                        }
+                        case '4':{
+                            strcat(tmpLog[j], " 4.");
+                            break;
+                        }
+                        case '5':{
+                            strcat(tmpLog[j], " 5.");
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }
+                else if(aux[3] == '-' && (aux[4] == 'B' || aux[4] == 'G' || aux[4] == 'R' || aux[4] == 'W' || aux[4] == 'Y')){
+                    strcpy(tmpLog[j], "O Gervásio");
+                    strcat(tmpLog[j], " indicou a(s) carta(s) com a cor");
+                    switch (aux[4]){
+                        case 'B':{
+                            strcat(tmpLog[j], " azul.");
+                            break;
+                        }
+                        case 'G':{
+                            strcat(tmpLog[j], " verde.");
+                            break;
+                        }
+                        case 'R':{
+                            strcat(tmpLog[j], " vermelha.");
+                            break;
+                        }
+                        case 'W':{
+                            strcat(tmpLog[j], " branca.");
+                            break;
+                        }
+                        case 'Y':{
+                            strcat(tmpLog[j], " amarela.");
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }
+            }
+            else if (aux[1] == '-' && aux[2] == 'T'){
+                memset(aux2, '\0', 4);
+                strcpy(tmpLog[j], "O Gervásio");
+                strcat(tmpLog[j], " descartou a carta ");
+                aux2[0] = aux[6];
+                aux2[1] = '\0';
+                strcat(tmpLog[j], aux2);
+                switch (aux[7]){
+                    case 'B':{
+                        strcat(tmpLog[j], " azul.");
+                        break;
+                    }
+                    case 'G':{
+                        strcat(tmpLog[j], " verde.");
+                        break;
+                    }
+                    case 'R':{
+                        strcat(tmpLog[j], " vermelha.");
+                        break;
+                    }
+                    case 'W':{
+                        strcat(tmpLog[j], " branca.");
+                        break;
+                    }
+                    case 'Y':{
+                        strcat(tmpLog[j], " amarela.");
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+            else if (aux[1] == '-' && aux[2] == 'J'){
+                memset(aux2, '\0', 4);
+                if (aux[3] == '-' && aux[4] == 'T'){
+                    strcpy(tmpLog[j], "O Gervásio");
+                    strcat(tmpLog[j], " jogou a carta ");
+                    aux2[0] = aux[6];
+                    aux2[1] = '\0';
+                    strcat(tmpLog[j], aux2);
+                    switch (aux[7]){
+                        case 'B':{
+                            strcat(tmpLog[j], " azul. Contudo foi descartada por não conbinar no monte.");
+                            break;
+                        }
+                        case 'G':{
+                            strcat(tmpLog[j], " verde. Contudo foi descartada por não conbinar no monte.");
+                            break;
+                        }
+                        case 'R':{
+                            strcat(tmpLog[j], " vermelha. Contudo foi descartada por não conbinar no monte.");
+                            break;
+                        }
+                        case 'W':{
+                            strcat(tmpLog[j], " branca. Contudo foi descartada por não conbinar no monte.");
+                            break;
+                        }
+                        case 'Y':{
+                            strcat(tmpLog[j], " amarela. Contudo foi descartada por não conbinar no monte.");
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }
+                else{
+                    strcpy(tmpLog[j], "O Gervásio");
+                    strcat(tmpLog[j], " jogou a carta ");
+                    aux2[0] = aux[4];
+                    aux2[1] = '\0';
+                    strcat(tmpLog[j], aux2);
+                    switch (aux[5]){
+                        case 'B':{
+                            strcat(tmpLog[j], " azul.");
+                            break;
+                        }
+                        case 'G':{
+                            strcat(tmpLog[j], " verde.");
+                            break;
+                        }
+                        case 'R':{
+                            strcat(tmpLog[j], " vermelha.");
+                            break;
+                        }
+                        case 'W':{
+                            strcat(tmpLog[j], " branca.");
+                            break;
+                        }
+                        case 'Y':{
+                            strcat(tmpLog[j], " amarela.");
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }
+            }
         }
     }
     return j;

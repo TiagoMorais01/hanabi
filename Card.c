@@ -113,6 +113,12 @@ int checkChar(char c, char arr[], int n){
     return v;
 }
 
+int findCpilha(int n, char c, Pilha pi, int np){
+    int i = 0;
+    for (i = 0; ((i < np) && ((pi->pilha[i]->color != c) || (pi->pilha[i]->num != n))); i++);
+    return (i < np);
+}
+
 //Compara duas cartas
 int compareCardC(Card c1, Card c2){
     return (c1->color == c2->color) ? 1 : 0;
@@ -145,6 +151,29 @@ int getCvn(Card c){
 //Função para obter a cor de uma carta
 char getCc(Card c){
     return c->color;
+}
+
+//Pegar nas ultimas cartas da pilha
+void getTopCpilha(Pilha pi, int *PCards, int np){
+    char cores[5] = {'B','G','R','W','Y'};
+    int i = 0;
+    int ac = 0;
+    while (i < np){
+        if (getCpilha(pi, i) != NULL){
+            if (cores[ac] == getCc(getCpilha(pi, i))){
+                if (PCards[ac] == 0){
+                    PCards[i] = getCnum(getCpilha(pi, i));
+                }
+                else if(PCards[i] < getCnum(getCpilha(pi, i))){
+                    PCards[i] = getCnum(getCpilha(pi, i));
+                }
+                i++;
+            }
+            else{
+                ac++;
+            }
+        }
+    }
 }
 
 void setCpos(Card c, int i){

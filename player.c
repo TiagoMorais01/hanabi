@@ -32,6 +32,10 @@ Card getCard(Player p, int i){
     return p->cards[i];
 }
 
+Card* getCards(Player p){
+    return p->cards;
+}
+
 //Função para obter e retirar uma carta do jogador
 Card grCard(Player j, int i){
     Card aux = j->cards[i];
@@ -142,7 +146,7 @@ int selCor(Player p, int play){
     int j = 0;
     char val = 0;
     //Armazena as letras disponiveis sem ter repetidas
-    for (i = 0; i < 5; i++){
+    for (i = 0; i < p->ncards; i++){
         if(checkChar(getCc(p->cards[i]), arr, j) || i == 0){
             arr[j] = getCc(p->cards[i]);
             j++;
@@ -227,6 +231,39 @@ int getNCP(Player p){
     return p->ncards;
 }
 
+//
+int getLowerCard(Player p){
+    int i = 0;
+    int min = -1;
+    int pos = -1;
+    Card c = NULL;
+    for (i = 0; i < getNCP(p); i++){
+        c = getCard(p, i);
+        if (c != NULL){
+            if (((getCnum(c) < min) && getCvn(c) == 0) || (min == -1 && getCvn(c) == 0)){
+                min = getCnum(c);
+                pos = i;
+            }
+        }
+    }
+    return pos;
+}
+
+//Verifica se a carta é unica no numero ou cor
+int cardsAlone(Player p, int num, char cor){
+    int i = 0;
+    int Ncolors[5] = {0, 0, 0, 0, 0};
+    int Nnum = 0;
+    int Ncor = 0;
+    for (i = 0; i < getNCP(p); i++){
+        if(getCc(getCard(p, i)) == cor)
+            Ncor++;
+        if (getCnum(getCard(p, i)) == num)
+            Nnum++;
+    }
+    return (Ncor == 1 && Nnum == 1) ? 3 : (Ncor == 1 && Nnum != 1) ? 2 : (Ncor != 1 && Nnum == 1) ? 1 : 0;
+}
+
 //Função para trocar inteiros num array
 void swapN(int *xp, int *yp){
     int temp = *xp;
@@ -289,6 +326,7 @@ int playCard(Pilha pi, Player p, int posC, int np){
     return f;
 }
 
+//Atribuir o nome a um jogador
 void setNPlayer(Player p, char* nomeN){
     strcpy(p->nome, nomeN);
 }

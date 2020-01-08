@@ -38,7 +38,6 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
     else{
         r = 1;
     }
-    
     //Main loop que faz decorrer o jogo
     while ((r || ultimasJ) && lives != 0){
         
@@ -55,7 +54,6 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
             else{
                 (ultimasJ > 0) ? ultimasJ-- : 0;
             }
-            
         }
         
         if (play){//Vez do jogador
@@ -155,6 +153,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                                 strcat(aux, "-D-");
                                 aux[4] = (char)selnum + 48;
                                 insertLog(log, aux);
+                                play = 0;
                             }
                             selnum = 0;
                             ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
@@ -168,6 +167,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                                 strcat(aux, "-D-");
                                 aux[4] = (char)selcor + 48;
                                 insertLog(log, aux);
+                                play = 0;
                             }
                             selcor = 0;
                             ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
@@ -440,6 +440,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
         }
         else{//Vez da AI
             PlayAI(deckM, trash, ai, jog, pi, log, lives, &tips, &nc, &nt, &np);
+            ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
             play = 1;
         }
     }
