@@ -345,9 +345,9 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
 
     //Atribui a cor branca e imprime as posições de cada respetiva carta
     setColor('W');
-    gotoxy((w/2)-6*2-10,15);
+    gotoxy((w/2)-6*2-11,15);
     for (i = 0; i < getNCP(jog); i++){
-        printf("  (%d)  ", i+1);
+        printf("   (%d)  ", i+1);
     }
     printf("\n");
     
