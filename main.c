@@ -38,6 +38,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
     else{
         r = 1;
     }
+
     //Main loop que faz decorrer o jogo
     while ((r || ultimasJ) && lives != 0){
         
@@ -428,7 +429,6 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                     else if (x == 'N' || x == 'n'){
                         r = 0;
                     }
-                    
                     break;
                 default:
                     gotoxy(0, 24);
