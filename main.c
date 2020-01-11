@@ -17,6 +17,63 @@
 #include "Save.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
+void pontuacao(int np, int lives){
+    int h,w;
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+        system("cls");
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        int row = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+        w = csbi.dwSize.X;
+    //senao e linux/mac
+    #else
+        system("clear");
+        struct winsize size;
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
+        w = size.ws_col;
+        h = size.ws_row;
+    #endif
+    
+    if (lives == 0){
+        np = 0;
+        gotoxy(w/2-15,2);
+        printf("Perdeste por causa das vidas ou seja a tua pontuaçao é 0");
+    }
+    np = np;
+    printf("%d",np);
+    
+    if (np >= 0 && np <= 5)
+    {
+        gotoxy(w/2-15,2);
+        printf("Oh! Credo foram todos vaiados.");
+    }
+    else if (np >= 6 && np <= 10)
+    {
+        gotoxy(w/2-24,2);
+        printf("Muito pobre, os espectadores estão entediados.");
+    }
+    else if (np >= 11 && np <= 15)
+    {
+        gotoxy(w/2-34,2);
+        printf("O espetáculo foi razoável, mas os espectadores já viram melhor. ");
+    }
+    else if (np >= 16 && np <= 20)
+    {
+        gotoxy(w/2-23,2);
+        printf("Bom espetáculo! O público está satisfeito.");
+    }
+    else if (np >= 21 && np <= 24)
+    {
+        gotoxy(w/2-21,2);
+        printf("Muito bom! O público está entusiasmado!");
+    }
+    else if (np == 25)
+    {
+        gotoxy(w/2-28,2);
+        printf("Lendário! O público nunca esquecerá este espetáculo!");
+    }
+    
+}
+
 //Função main do jogo onde ocorre a gestão do jogo
 void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], int lives, int tips, int nc, int nt, int np, int play, int ultimasJ){
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -38,7 +95,6 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
     else{
         r = 1;
     }
-
     //Main loop que faz decorrer o jogo
     while ((r || ultimasJ) && lives != 0){
         
@@ -429,6 +485,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                     else if (x == 'N' || x == 'n'){
                         r = 0;
                     }
+                    
                     break;
                 default:
                     gotoxy(0, 24);
@@ -445,7 +502,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
         }
     }
 
-    if (r == 0 && ultimasJ == 0 && nc == 0){
+    if ((r == 0 && ultimasJ == 0 && nc == 0) || !lives){
         FILE* f;
         if ((f = fopen("save.ha", "r")) != NULL){
             //delete the file
@@ -455,13 +512,13 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
             //delete the file
             fclose(f);
         }
-
+        //pontuacao(lives,np);
     }
     
 
     return;
 }
-
+ 
 //Função com as regras e como se joga
 void tutorial(){
     FILE *regras;
@@ -683,6 +740,7 @@ void main(){
                 #endif
                 break;
             case '0':
+                pontuacao(np,lives);
                 run = 0;
                 break;
             default:
