@@ -39,7 +39,7 @@ void pontuacao(int np, int lives){
         printf("Perdeste por causa das vidas ou seja a tua pontuaçao é 0");
     }
     np = np;
-    printf("%d",np);
+    //printf("%d",np);
     
     if (np >= 0 && np <= 5)
     {
