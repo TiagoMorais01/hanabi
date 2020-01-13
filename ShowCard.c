@@ -332,7 +332,9 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
 
     //Mão player
     for (i = 0; i < getNCP(jog); i++){
-        if (getCard(jog, 0) != NULL){
+        if (getCard(jog, i) != NULL){
+            gotoxy((w/2)+6*2+8, 17 + i);
+            printf("C: %c N: %d", getCc(getCard(jog, i)) , getCnum(getCard(jog, i)));
             selColor(jog, i);
             if(getCvn(getCard(jog, i))){//Um if para verificar se o numero da carta está visível para imprimir ou não
                 drawCardP((w/2)-6*2+i*8-10, 13, getCnum(getCard(jog, i)));
@@ -345,9 +347,9 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
 
     //Atribui a cor branca e imprime as posições de cada respetiva carta
     setColor('W');
-    gotoxy((w/2)-6*2-10,15);
+    gotoxy((w/2)-6*2-11,15);
     for (i = 0; i < getNCP(jog); i++){
-        printf("  (%d)  ", i+1);
+        printf("   (%d)  ", i+1);
     }
     printf("\n");
     
