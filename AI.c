@@ -53,7 +53,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NB1: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -84,7 +83,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NB1: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -106,7 +104,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NB1: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -122,7 +119,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                         aux[0] = 'C';
                                         strcat(aux, "-D-");
                                         aux[4] = (char)getCnum(c) + 48;
-                                        printf("NB1: %d", (char)getCnum(c) + 48);
                                         insertLog(log, aux);
                                         (*tips)--;
                                     }
@@ -154,7 +150,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                     aux[0] = 'C';
                                     strcat(aux, "-D-");
                                     aux[4] = (char)getCnum(c) + 48;
-                                    printf("NB1: %d", (char)getCnum(c) + 48);
                                     insertLog(log, aux);
                                     flag = 0;
                                     (*tips)--;
@@ -174,7 +169,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NG3: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -205,7 +199,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NG2: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -227,7 +220,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NG1: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -243,7 +235,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                         aux[0] = 'C';
                                         strcat(aux, "-D-");
                                         aux[4] = (char)getCnum(c) + 48;
-                                        printf("NG: %d", (char)getCnum(c) + 48);
                                         insertLog(log, aux);
                                         (*tips)--;
                                     }
@@ -275,7 +266,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                     aux[0] = 'C';
                                     strcat(aux, "-D-");
                                     aux[4] = (char)getCnum(c) + 48;
-                                    printf("NG: %d", (char)getCnum(c) + 48);
                                     insertLog(log, aux);
                                     flag = 0;
                                     (*tips)--;
@@ -295,7 +285,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NR3: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -326,7 +315,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NR2: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -348,7 +336,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NR1: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -364,7 +351,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                         aux[0] = 'C';
                                         strcat(aux, "-D-");
                                         aux[4] = (char)getCnum(c) + 48;
-                                        printf("NR: %d", (char)getCnum(c) + 48);
                                         insertLog(log, aux);
                                         (*tips)--;
                                     }
@@ -396,7 +382,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                     aux[0] = 'C';
                                     strcat(aux, "-D-");
                                     aux[4] = (char)getCnum(c) + 48;
-                                    printf("NR: %d", (char)getCnum(c) + 48);
                                     insertLog(log, aux);
                                     flag = 0;
                                     (*tips)--;
@@ -416,7 +401,6 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
                                 aux[0] = 'C';
                                 strcat(aux, "-D-");
                                 aux[4] = (char)getCnum(c) + 48;
-                                printf("NW3: %d", (char)getCnum(c) + 48);
                                 insertLog(log, aux);
                                 (*tips)--;
                             }
@@ -741,20 +725,214 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
 }
 
 //Função que faz a AI jogar
-void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], int lives, int *tips, int *nc, int *nt, int *np){
+void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], int *lives, int *tips, int *nc, int *nt, int *np){
     Card RCards[5];
     int infoCartas = checkInfo(ai, RCards);
     int infoJog = checkInfoJog(jog);
     int posCarta = 0;
+    char aux[10];
+    Card c = NULL;
     if (infoCartas){
-        //verificar se tem cartas jogaveis
-        if ((*tips) > 0){
-            darDica(deckM, trash, pi, jog, log, lives, tips, (*nc), (*nt), (*np));
+        int i = 0;
+        int posRC = 0;
+        Card auxC = NULL;
+        int flag = 1;
+        int PCards[5] = {0, 0, 0, 0, 0};
+        getTopCpilha(pi, PCards, (*np));
+        //Saber qual e o numero base da pilha(menor carta igual em todas as cores na pilha)
+        int base = 0;
+        if (PCards[0] >= 4 && PCards[1] >= 4 && PCards[2] >= 4 && PCards[3] >= 4 && PCards[4] >= 4){
+            base = 4;
         }
-        else{//descartar
-            //descartar a carta com maior conhecimento se possivel
-            //senão descartar uma carta com uma dica
-            //senão descartar uma carta aleatoria
+        else if (PCards[0] >= 3 && PCards[1] >= 3 && PCards[2] >= 3 && PCards[3] >= 3 && PCards[4] >= 3){
+            base = 3;
+        }
+        else if (PCards[0] >= 2 && PCards[1] >= 2 && PCards[2] >= 2 && PCards[3] >= 2 && PCards[4] >= 2){
+            base = 2;
+        }
+        else if (PCards[0] >= 1 && PCards[1] >= 1 && PCards[2] >= 1 && PCards[3] >= 1 && PCards[4] >= 1){
+            base = 1;
+        }
+        else{
+            base = 0;
+        }
+        
+        //verificar se tem cartas jogaveis
+        for (i = 0; i < infoCartas && flag; i++){
+            c = getCard(jog, i);
+            if (c != NULL){
+                switch (getCc(c)){
+                    case 'B':{
+                        posRC = 0;
+                        break;
+                    }
+                    case 'G':{
+                        posRC = 1;
+                        break;
+                    }
+                    case 'R':{
+                        posRC = 2;
+                    }
+                    case 'W':{
+                        posRC = 3;
+                    }
+                    case 'Y':{
+                        posRC = 4;
+                    }
+                }
+                if (getCvc(c) == 1){
+                    if (getCvn(c) == 1){
+                        if (PCards[posRC] + 1 == getCnum(c)){
+                            if(playCard(pi, ai, getCpos(c), (*np))){
+                                auxC = grCard(ai, getCpos(c));
+                                setCpilha(pi, auxC, (*np)++);
+                                setCpos(getCpilha(pi, ((*np) - 1)), ((*np) - 1));
+                                if (getCnum(getCpilha(pi, ((*np) - 1))) == 5 && (*tips) < 8)
+                                    (*tips)++;
+                                lessCardsP(ai);
+                                if ((*nc) > 0){
+                                    pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
+                                    plusCardsP(ai);
+                                }
+                                if(getNCP(ai) < 5){
+                                    pushToLeft(ai);
+                                }
+                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                                aux[0] = 'C';
+                                strcat(aux, "-J-");
+                                aux[4] = (char) getCnum(auxC) + 48;
+                                aux[5] = getCc(auxC);
+                                insertLog(log, aux);
+                                auxC = NULL;
+                                sortPilha(pi, 0, np - 1);//Função para ordenar a pilha
+                            }
+                            else{
+                                auxC = grCard(ai, getCpos(c));
+                                gototrash(trash, auxC, (*nt)++);//Função que passa a carta para o descarte
+                                lessCardsP(ai);
+                                if ((*nc) > 0){
+                                    pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
+                                    plusCardsP(ai);
+                                }
+                                if(getNCP(ai) < 5){
+                                    pushToLeft(ai);
+                                }
+                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                                aux[0] = 'C';
+                                strcat(aux, "-J-T-");
+                                aux[6] = (char) getCnum(auxC) + 48;
+                                aux[7] = getCc(auxC);
+                                insertLog(log, aux);
+                                auxC = NULL;
+                                sortTrash(trash, 0, (*nt) - 1);
+                                (*lives)--;
+                            }
+                            flag = 0;
+                        }
+                        else if(base > getCnum(c) || PCards[posRC] + 1 > getCnum(c)){
+                            if ((*tips) < 8){
+                                auxC = grCard(ai, getCpos(c));
+                                gototrash(trash, auxC, (*nt)++);//Função que passa a carta para o descarte
+                                lessCardsP(ai);
+                                if ((*nc) > 0){
+                                    pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
+                                    plusCardsP(ai);
+                                }
+                                if(getNCP(ai) < 5){
+                                    pushToLeft(ai);
+                                }
+                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                                aux[0] = 'C';
+                                strcat(aux, "-T-");
+                                aux[4] = (char) getCnum(auxC) + 48;
+                                aux[5] = getCc(auxC);
+                                insertLog(log, aux);
+                                auxC = NULL;
+                                sortTrash(trash, 0, (*nt) - 1);
+                                flag = 0;
+                            }
+                        }
+                    }
+                    else{
+                        if ((*tips) < 8){
+                            if (PCards[posRC] == 5){
+                                auxC = grCard(ai, getCpos(c));
+                                gototrash(trash, auxC, (*nt)++);//Função que passa a carta para o descarte
+                                lessCardsP(ai);
+                                if ((*nc) > 0){
+                                    pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
+                                    plusCardsP(ai);
+                                }
+                                if(getNCP(ai) < 5){
+                                    pushToLeft(ai);
+                                }
+                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                                aux[0] = 'C';
+                                strcat(aux, "-T-");
+                                aux[4] = (char) getCnum(auxC) + 48;
+                                aux[5] = getCc(auxC);
+                                insertLog(log, aux);
+                                auxC = NULL;
+                                sortTrash(trash, 0, (*nt) - 1);
+                            }
+                        }
+                    }
+                }
+                else{
+                    if (getCvn(c) == 1){
+                        if(base > getCnum(c)){
+                            if ((*tips) < 8){
+                                auxC = grCard(ai, getCpos(c));
+                                gototrash(trash, auxC, (*nt)++);//Função que passa a carta para o descarte
+                                lessCardsP(ai);
+                                if ((*nc) > 0){
+                                    pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
+                                    plusCardsP(ai);
+                                }
+                                if(getNCP(ai) < 5){
+                                    pushToLeft(ai);
+                                }
+                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                                aux[0] = 'C';
+                                strcat(aux, "-T-");
+                                aux[4] = (char) getCnum(auxC) + 48;
+                                aux[5] = getCc(auxC);
+                                insertLog(log, aux);
+                                auxC = NULL;
+                                sortTrash(trash, 0, (*nt) - 1);
+                                flag = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if(flag){
+            if ((*tips) > 0){
+                darDica(deckM, trash, pi, jog, log, lives, tips, (*nc), (*nt), (*np));
+            }
+            else{
+                posCarta = rand() % 5;
+                auxC = grCard(ai, posCarta);
+                gototrash(trash, auxC, (*nt)++);//Função que passa a carta para o descarte
+                lessCardsP(ai);
+                if ((*nc) > 0){
+                    pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
+                    plusCardsP(ai);
+                }
+                if(getNCP(ai) < 5){
+                    pushToLeft(ai);
+                }
+                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+                aux[0] = 'C';
+                strcat(aux, "-T-");
+                aux[4] = (char) getCnum(auxC) + 48;
+                aux[5] = getCc(auxC);
+                insertLog(log, aux);
+                auxC = NULL;
+                sortTrash(trash, 0, (*nt) - 1);
+            }
         }
     }
     else{
@@ -763,7 +941,8 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
         }
         else{
             posCarta = rand() % 5;
-            gototrash(trash, getCard(ai, posCarta), posCarta);
+            c = getCard(ai, posCarta);
+            gototrash(trash, c, posCarta);
             lessCardsP(ai);
             if ((*nc) > 0){
                 pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
@@ -772,8 +951,15 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
             if(getNCP(ai) < 5){
                 pushToLeft(ai);
             }
+            memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
+            aux[0] = 'C';
+            strcat(aux, "-T-");
+            aux[4] = (char) getCnum(c) + 48;
+            aux[5] = getCc(c);
+            insertLog(log, aux);
+            c = NULL;
+            sortTrash(trash, 0, (*nt) - 1);
             (*tips)++;
         }
     }
-    
 }
