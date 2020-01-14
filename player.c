@@ -256,10 +256,12 @@ int cardsAlone(Player p, int num, char cor){
     int Nnum = 0;
     int Ncor = 0;
     for (i = 0; i < getNCP(p); i++){
-        if(getCc(getCard(p, i)) == cor)
-            Ncor++;
-        if (getCnum(getCard(p, i)) == num)
-            Nnum++;
+        if (getCard(p, i) != NULL){
+            if(getCc(getCard(p, i)) == cor)
+                Ncor++;
+            if (getCnum(getCard(p, i)) == num)
+                Nnum++;
+        }
     }
     return (Ncor == 1 && Nnum == 1) ? 3 : (Ncor == 1 && Nnum != 1) ? 2 : (Ncor != 1 && Nnum == 1) ? 1 : 0;
 }
