@@ -162,10 +162,10 @@ void getTopCpilha(Pilha pi, int *PCards, int np){
         if (getCpilha(pi, i) != NULL){
             if (cores[ac] == getCc(getCpilha(pi, i))){
                 if (PCards[ac] == 0){
-                    PCards[i] = getCnum(getCpilha(pi, i));
+                    PCards[ac] = getCnum(getCpilha(pi, i));
                 }
-                else if(PCards[i] < getCnum(getCpilha(pi, i))){
-                    PCards[i] = getCnum(getCpilha(pi, i));
+                else if(PCards[ac] < getCnum(getCpilha(pi, i))){
+                    PCards[ac] = getCnum(getCpilha(pi, i));
                 }
                 i++;
             }
@@ -281,8 +281,10 @@ void createDeck(Deck d){
 void giveTipN(Card *cards, int val){
     int i = 0;
     for (i = 0; i < 5; i++){
-        if(cards[i]->num == val){
-            cards[i]->visibleN = 1;
+        if (cards[i] != NULL){
+            if(cards[i]->num == val){
+                cards[i]->visibleN = 1;
+            }
         }
     }
 }
@@ -291,8 +293,10 @@ void giveTipN(Card *cards, int val){
 void giveTipC(Card *cards, char val){
     int i = 0;
     for (i = 0; i < 5; i++){
-        if(cards[i]->color == val){
-            cards[i]->visibleC = 1;
+        if (cards[i] != NULL){
+            if(cards[i]->color == val){
+                cards[i]->visibleC = 1;
+            }
         }
     }
 }
