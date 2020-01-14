@@ -5,6 +5,7 @@
 #include "Card.h"
 #include "player.h"
 #include "Log.h"
+#define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
 //estrutura para guardar as jogadas
 struct _Log{
@@ -13,9 +14,9 @@ struct _Log{
 
 //Iniciar a estrutura Log
 Log* newLog(){
-    Log *tmpL = (Log*) malloc(60 * sizeof(struct _Log));
+    Log *tmpL = (Log*) malloc(100 * sizeof(struct _Log));
     int i = 0;
-    for (i = 0; i < 60; i++){
+    for (i = 0; i < 100; i++){
         tmpL[i] = NULL;
     }
     return tmpL;
@@ -100,10 +101,10 @@ int getLastThree(Log log[], Player p, Player ai, char *tmpLog[]){
                 memset(aux2, '\0', 4);
                 strcpy(tmpLog[j], "O jogador");
                 strcat(tmpLog[j], " descartou a carta ");
-                aux2[0] = aux[6];
+                aux2[0] = aux[4];
                 aux2[1] = '\0';
                 strcat(tmpLog[j], aux2);
-                switch (aux[7]){
+                switch (aux[5]){
                     case 'B':{
                         strcat(tmpLog[j], " azul.");
                         break;
@@ -257,10 +258,10 @@ int getLastThree(Log log[], Player p, Player ai, char *tmpLog[]){
                 memset(aux2, '\0', 4);
                 strcpy(tmpLog[j], "O Gervásio");
                 strcat(tmpLog[j], " descartou a carta ");
-                aux2[0] = aux[6];
+                aux2[0] = aux[4];
                 aux2[1] = '\0';
                 strcat(tmpLog[j], aux2);
-                switch (aux[7]){
+                switch (aux[5]){
                     case 'B':{
                         strcat(tmpLog[j], " azul.");
                         break;
@@ -380,7 +381,6 @@ int loadLog(Log log[]){
         for (i = 0; !feof(Flog); i++){
             fscanf(Flog, "%s", aux);
             if (strcmp(aux, "")){
-                printf("\n\n%s\n\n", aux);
                 log[i] = (Log) malloc(sizeof(struct _Log));
                 strcpy(log[i]->exp, aux);
                 memset(aux, '\0', 10);
