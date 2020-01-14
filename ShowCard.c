@@ -310,19 +310,16 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     //Imprime a lixeira(trash)
     for(i = 0 ; i < nt ; i++, l++){
         Card c = getCa(trash, i+1);
-        
-        if (i == 0){
-            p = getCc(c);
-        }
-        else if(p != getCc(c)){
-            k++;
-            l = 0;
-            m++;
-            p = getCc(c);
-        }
-
-        
         if(c != NULL){
+            if (i == 0){
+                p = getCc(c);
+            }
+            else if(p != getCc(c)){
+                k++;
+                l = 0;
+                m++;
+                p = getCc(c);
+            }
             setColor(getCc(c));
             drawTrash(l*3+1, 4+k*3+1-m, c);
         }
@@ -333,8 +330,6 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     //Mão player
     for (i = 0; i < getNCP(jog); i++){
         if (getCard(jog, i) != NULL){
-            gotoxy((w/2)+6*2+8, 17 + i);
-            printf("C: %c N: %d", getCc(getCard(jog, i)) , getCnum(getCard(jog, i)));
             selColor(jog, i);
             if(getCvn(getCard(jog, i))){//Um if para verificar se o numero da carta está visível para imprimir ou não
                 drawCardP((w/2)-6*2+i*8-10, 13, getCnum(getCard(jog, i)));
