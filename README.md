@@ -5,9 +5,9 @@ What you need?
 ### Installing
 Nohting. Just a terminal.
 ## How to run
-In the terminal go to the folder of the game.
+In the terminal go to the folder of the game.\n
 If you use linux/mac go to the folder '/linux-mac' and do
 ```
 make
 ```
-If you are in windows go to the folder 'windows' and execute the exe.
+If you are in windows go to the folder '/windows' and execute the exe.
