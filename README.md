@@ -14,6 +14,6 @@ If you are in windows go to the folder '/windows' and execute the exe.
 ## Authors
 
 * **Tomás Silva** - *ALL work* - [Def4ult03](https://github.com/Def4ult03)
-* **Tiago Morais** - *ALL work* - [TiagoMorais01](https://https://github.com/TiagoMorais01)
+* **Tiago Morais** - *ALL work* - [TiagoMorais01](https://github.com/TiagoMorais01)
 
 See also the list of [contributors](https://github.com/Def4ult03/hanabi/graphs/contributors) who participated in this project.
