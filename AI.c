@@ -6,14 +6,29 @@
 #include "player.h"
 #include "Log.h"
 #include "AI.h"
+#define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
+
+void delay(int number_of_seconds){
+    // Converting time into milli_seconds 
+    int milli_seconds = 1000 * number_of_seconds; 
+  
+    // Storing start time 
+    clock_t start_time = clock(); 
+  
+    // looping till required time is not achieved 
+    while (clock() < start_time + milli_seconds) 
+        ;
+}
 
 //vê se a AI tem alguma informação das suas cartas
 int checkInfo(Player ai, Card Rcard []){
     int i = 0;
     int k = 0;
     for (i = 0; i < getNCP(ai); i++){
-        if (getCvc(getCard(ai, i)) == 1 || getCvn(getCard(ai, i)) == 1){
-            Rcard[k++] = getCard(ai, i);
+        if (getCard(ai, i) != NULL){
+            if (getCvc(getCard(ai, i)) == 1 || getCvn(getCard(ai, i)) == 1){
+                Rcard[k++] = getCard(ai, i);
+            }
         }
     }
     return k;
@@ -24,7 +39,9 @@ int checkInfoJog(Player jog){
     int i = 0;
     int n = getNCP(jog);
     for (i = 0; i < n; i++){
-        if (getCvc(getCard(jog, i)) == 1 || getCvn(getCard(jog, i)) == 1) break;
+        if (getCard(jog, i) != NULL){
+            if (getCvc(getCard(jog, i)) == 1 || getCvn(getCard(jog, i)) == 1) break;
+        }
     }
     return (i != n);
 }
@@ -38,7 +55,7 @@ void darDica(Deck deckM, Deck trash, Pilha pi, Player jog, Log log[], int lives,
     int flag = 1;
     char aux[10];
     Card c = NULL;
-
+    
     for (i = 0; i < getNCP(jog) && flag; i++){
         c = getCard(jog, i);
         if (c != NULL){
@@ -757,9 +774,10 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
             base = 0;
         }
         
+        
         //verificar se tem cartas jogaveis
         for (i = 0; i < infoCartas && flag; i++){
-            c = getCard(jog, i);
+            c = RCards[i];
             if (c != NULL){
                 switch (getCc(c)){
                     case 'B':{
@@ -772,12 +790,15 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
                     }
                     case 'R':{
                         posRC = 2;
+                        break;
                     }
                     case 'W':{
                         posRC = 3;
+                        break;
                     }
                     case 'Y':{
                         posRC = 4;
+                        break;
                     }
                 }
                 if (getCvc(c) == 1){
@@ -804,7 +825,7 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
                                 aux[5] = getCc(auxC);
                                 insertLog(log, aux);
                                 auxC = NULL;
-                                sortPilha(pi, 0, np - 1);//Função para ordenar a pilha
+                                sortPilha(pi, 0, (*np) - 1);//Função para ordenar a pilha
                             }
                             else{
                                 auxC = grCard(ai, getCpos(c));
@@ -848,32 +869,9 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
                                 aux[5] = getCc(auxC);
                                 insertLog(log, aux);
                                 auxC = NULL;
+                                (*tips)++;
                                 sortTrash(trash, 0, (*nt) - 1);
                                 flag = 0;
-                            }
-                        }
-                    }
-                    else{
-                        if ((*tips) < 8){
-                            if (PCards[posRC] == 5){
-                                auxC = grCard(ai, getCpos(c));
-                                gototrash(trash, auxC, (*nt)++);//Função que passa a carta para o descarte
-                                lessCardsP(ai);
-                                if ((*nc) > 0){
-                                    pickCard(ai, grCa(deckM, (*nc)--));//Função que pega uma carta do deck e atribui ao jogador
-                                    plusCardsP(ai);
-                                }
-                                if(getNCP(ai) < 5){
-                                    pushToLeft(ai);
-                                }
-                                memset(aux, '\0', 10);//Coloca '\0' da posição zero até 10 posições a frente
-                                aux[0] = 'C';
-                                strcat(aux, "-T-");
-                                aux[4] = (char) getCnum(auxC) + 48;
-                                aux[5] = getCc(auxC);
-                                insertLog(log, aux);
-                                auxC = NULL;
-                                sortTrash(trash, 0, (*nt) - 1);
                             }
                         }
                     }
@@ -910,10 +908,10 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
         
         if(flag){
             if ((*tips) > 0){
-                darDica(deckM, trash, pi, jog, log, lives, tips, (*nc), (*nt), (*np));
+                darDica(deckM, trash, pi, jog, log, (*lives), tips, (*nc), (*nt), (*np));
             }
             else{
-                posCarta = rand() % 5;
+                posCarta = rand() % getNCP(ai);
                 auxC = grCard(ai, posCarta);
                 gototrash(trash, auxC, (*nt)++);//Função que passa a carta para o descarte
                 lessCardsP(ai);
@@ -931,16 +929,17 @@ void PlayAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], 
                 aux[5] = getCc(auxC);
                 insertLog(log, aux);
                 auxC = NULL;
+                (*tips)++;
                 sortTrash(trash, 0, (*nt) - 1);
             }
         }
     }
     else{
         if((*tips) > 0){
-            darDica(deckM, trash, pi, jog, log, lives, tips, (*nc), (*nt), (*np));
+            darDica(deckM, trash, pi, jog, log, (*lives), tips, (*nc), (*nt), (*np));
         }
         else{
-            posCarta = rand() % 5;
+            posCarta = rand() % getNCP(ai);
             c = getCard(ai, posCarta);
             gototrash(trash, c, posCarta);
             lessCardsP(ai);
