@@ -30,7 +30,7 @@ void delay(int number_of_seconds){
 }
 
 void pontuacao(int np, int lives){
-    int h,w;
+    int w;
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
         system("cls");
         CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -42,7 +42,6 @@ void pontuacao(int np, int lives){
         struct winsize size;
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
         w = size.ws_col;
-        h = size.ws_row;
     #endif
 
     if (lives == 0){
@@ -591,6 +590,7 @@ void main(){
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         int row = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
         w = csbi.dwSize.X;
+        h = csbi.dwSize.Y;
     //senao e linux/mac
     #else
         system("clear");
