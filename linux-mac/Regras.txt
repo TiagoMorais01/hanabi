@@ -1,4 +1,13 @@
 Regras:
+Composiçâo :
+	O jogo começa com um deck de 50 cartas, distribuindo 5 cartas para cada jogador baralhado antes.
+
+	O baralho contém 5 cores cada uma com 3 cartas 1, 2 cartas 2, 2 cartas 3, 2 cartas 4 e 1 carta 5.
+
+	Cores :Azul, Verde, Vermelho, Amarelho e Branco.
+
+	Cada carta na pilha conta 1 ponto.
+
 Neste jogo temos 3 opções :
 
 	Jogar uma Carta:
