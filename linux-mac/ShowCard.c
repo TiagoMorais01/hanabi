@@ -31,7 +31,10 @@ void setColor(char c){
             printf("\033[0;31m");
             break;
         case 'W':
-            printf("\033[0m");
+            printf("\033[0;31m");
+            break;
+        case 'C':
+            printf("\033[100m");
             break;
         default:
             printf("\033[0m");
@@ -45,7 +48,7 @@ void selColor(Player p, int n){
         setColor(getCc(getCard(p, n)));
     }
     else{
-        setColor('W');
+        setColor('C');
     }
 }
 
@@ -219,7 +222,7 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
             printf(" %lc", 0x2665);
     #endif
 
-    setColor('W');
+    setColor('G');
     
     //Mão Gervásio(AI)
     for (i = 0; i < getNCP(ai); i++){
@@ -285,7 +288,7 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     }
 
     //Jogadas
-    setColor('W');
+    setColor('G');
     char *tmpLog[3];
     for (i = 0; i < 3; i++){
         tmpLog[i] = (char*) malloc(200);
@@ -341,7 +344,7 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     }
 
     //Atribui a cor branca e imprime as posições de cada respetiva carta
-    setColor('W');
+    setColor('G');
     gotoxy((w/2)-6*2-11,15);
     for (i = 0; i < getNCP(jog); i++){
         printf("   (%d)  ", i+1);
