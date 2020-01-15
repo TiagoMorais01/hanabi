@@ -90,7 +90,7 @@ int selNum(Player p, int play){
     printf("                                       ");
     gotoxy(0, 23);
     printf("                                       ");
-    gotoxy(4, 21);
+    gotoxy(3, 21);
     val = getchar();
     while (getchar()!='\n');
 
@@ -121,8 +121,7 @@ int selNum(Player p, int play){
         printf("->");
         gotoxy(0, 23);
         printf("                                       ");
-        while (getchar()!='\n');
-        gotoxy(4, 22);
+        gotoxy(3, 22);
         val = getchar();
         while (getchar()!='\n');
     }
