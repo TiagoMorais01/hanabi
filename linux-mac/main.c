@@ -82,27 +82,15 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
     int selcor = 0;
     char aux[10];
     Card auxC = NULL;
-    if (ultimasJ){
-        r = 0;
-    }
-    else{
-        r = 1;
-    }
     //Main loop que faz decorrer o jogo
-    while ((r || ultimasJ) && lives != 0){
+    while (r && lives != 0){
         
-        if ((nc == 0 && r == 1) || (nc == 0 && r == 0)){
-            if (r != 0){    
-                if (getExp(log, 0)[0] == 'C'){
-                    ultimasJ = play ? 3 : 2;
-                }
-                else if(getExp(log, 0)[0] == 'P'){
-                    ultimasJ = play ? 2 : 3;
-                }
-                r = 0;
+        if ((nc == 0 && ultimasJ == -1)){
+            if (getExp(log, 0)[0] == 'C'){
+                ultimasJ = play ? 3 : 2;
             }
-            else{
-                (ultimasJ > 0) ? ultimasJ-- : 0;
+            else if(getExp(log, 0)[0] == 'P'){
+                ultimasJ = play ? 2 : 3;
             }
         }
         
@@ -493,28 +481,26 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
             ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
             play = 1;
         }
+
+        if (ultimasJ > 0){
+            ultimasJ--;
+        }
     }
 
-    if ((r == 0 && ultimasJ == 0 && nc == 0) || !lives){
+    if ((ultimasJ == 0 && nc == 0) || !lives){
         FILE* f;
         if ((f = fopen("save.ha", "r")) != NULL){
-            if (remove("save.ha") == 0) 
-                printf("Deleted successfully"); 
-            else
+            if (remove("save.ha") == 0)
                 printf("Unable to delete the file");
             fclose(f);
         }
         if ((f = fopen("save.log", "r")) != NULL){
-            if (remove("save.log") == 0) 
-                printf("Deleted successfully");
-            else
+            if (remove("save.log") != 0) 
                 printf("Unable to delete the file");
             fclose(f);
         }
         pontuacao(np,lives);
     }
-    
-
     return;
 }
  
@@ -662,7 +648,7 @@ void main(){
                 nc = 50;
                 nt = 0;
                 np = 0;
-                ultimasJ = 0;
+                ultimasJ = -1;
                 srand((unsigned)time(&t));
                 play = rand() % 2;//Escolhe a sorte qual jogardor vai começar
                 createDeck(deckM);//Função que preenche o Deck
@@ -679,6 +665,7 @@ void main(){
                 freeP(ai);
                 freeP(jog);
                 freePi(pilha);
+                deleteLog(log);
                 /* --------------------------- */
                 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
                     system("cls");
@@ -706,12 +693,13 @@ void main(){
                         freeP(ai);
                         freeP(jog);
                         freePi(pilha);
+                        deleteLog(log);
                         lives = 3;
                         tips = 8;
                         nc = 50;
                         nt = 0;
                         np = 0;
-                        ultimasJ = 0;
+                        ultimasJ = -1;
                         /* ------------------------- */
                         #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
                             system("cls");
