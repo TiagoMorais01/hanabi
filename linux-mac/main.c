@@ -498,11 +498,17 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
     if ((r == 0 && ultimasJ == 0 && nc == 0) || !lives){
         FILE* f;
         if ((f = fopen("save.ha", "r")) != NULL){
-            //delete the file
+            if (remove("save.ha") == 0) 
+                printf("Deleted successfully"); 
+            else
+                printf("Unable to delete the file");
             fclose(f);
         }
         if ((f = fopen("save.log", "r")) != NULL){
-            //delete the file
+            if (remove("save.log") == 0) 
+                printf("Deleted successfully");
+            else
+                printf("Unable to delete the file");
             fclose(f);
         }
         pontuacao(np,lives);
@@ -653,7 +659,7 @@ void main(){
                 log = newLog();//Inicia um array para armazenar as jogadas dos jogadores
                 lives = 3;
                 tips = 8;
-                nc = 15;
+                nc = 50;
                 nt = 0;
                 np = 0;
                 ultimasJ = 0;
