@@ -141,6 +141,7 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
+//Função para ajustar uma string ao tamanho do ecrã
 void adjustString(int w, int *k, char *exp){
     int i = 0;
     int j = (w -((w/2)+6*2+8) + 1);

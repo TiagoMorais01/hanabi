@@ -29,6 +29,7 @@ void delay(int number_of_seconds){
         ;
 }
 
+//Função para imprimir a pontuação
 void pontuacao(int np, int lives){
     int w;
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)

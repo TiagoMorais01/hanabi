@@ -103,7 +103,6 @@ void loadGame(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, int *live
         
         for (i = 0; i < k; i++){
             fscanf(load, "%d, %c, %d, %d, %d", &num, &c, &pos, &vn, &vc);
-            //printf("NUM: %d C: %c POS: %d VN: %d VC: %d I: %d\n\n", num, c, pos, vn, vc, i);
             crd = newCard();
             ConsCard(crd, num, c, pos, vn, vc);
             setCard(deckM, crd, i);
