@@ -485,6 +485,10 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
         if (ultimasJ > 0){
             ultimasJ--;
         }
+
+        if (ultimasJ == 0){
+            r = 0;
+        }
     }
 
     if ((ultimasJ == 0 && nc == 0) || !lives){
