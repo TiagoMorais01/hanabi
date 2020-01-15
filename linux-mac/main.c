@@ -503,6 +503,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                 perror("Erro ");
             fclose(f);
         }
+        delay(5);
         pontuacao(np,lives);
     }
     return;
