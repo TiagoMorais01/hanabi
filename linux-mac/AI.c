@@ -8,18 +8,6 @@
 #include "AI.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
-void delay(int number_of_seconds){
-    // Converting time into milli_seconds 
-    int milli_seconds = 1000 * number_of_seconds; 
-  
-    // Storing start time 
-    clock_t start_time = clock(); 
-  
-    // looping till required time is not achieved 
-    while (clock() < start_time + milli_seconds) 
-        ;
-}
-
 //vê se a AI tem alguma informação das suas cartas
 int checkInfo(Player ai, Card Rcard []){
     int i = 0;
