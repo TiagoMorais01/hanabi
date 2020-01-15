@@ -501,6 +501,9 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
             PlayAI(deckM, trash, ai, jog, pi, log, &lives, &tips, &nc, &nt, &np);
             ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
             play = 1;
+            if (ultimasJ > 0){
+                ultimasJ--;
+            }
         }
 
         if (ultimasJ == 0){
