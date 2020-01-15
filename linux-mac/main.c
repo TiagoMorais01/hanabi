@@ -636,6 +636,8 @@ void main(){
                 printf("                             ");
                 gotoxy((w/2) - 13,8);
                 printf("                             ");
+                gotoxy((w/2) - 13,9);
+                printf("                             ");
                 gotoxy((w/2) - 13,5);
                 printf("->");
                 fscanf(stdin, "%s", no);

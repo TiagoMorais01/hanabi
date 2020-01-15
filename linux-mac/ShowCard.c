@@ -226,8 +226,6 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     //Mão Gervásio(AI)
     for (i = 0; i < getNCP(ai); i++){
         setColor(getCc(getCard(ai, i)));
-        gotoxy((w/2)-6*2+i*8-10, 4);
-        printf("%d",getCvc(getCard(ai, i)));
         drawCard((w/2)-6*2+i*8-10, 5, getCnum(getCard(ai, i)));
     }
     setColor('C');
