@@ -495,12 +495,12 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
         FILE* f;
         if ((f = fopen("save.ha", "r")) != NULL){
             if (remove("save.ha") == 0)
-                printf("Unable to delete the file");
+                perror("Erro ");
             fclose(f);
         }
         if ((f = fopen("save.log", "r")) != NULL){
             if (remove("save.log") != 0) 
-                printf("Unable to delete the file");
+                perror("Erro ");
             fclose(f);
         }
         pontuacao(np,lives);
