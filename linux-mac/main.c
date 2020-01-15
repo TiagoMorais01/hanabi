@@ -96,10 +96,6 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
     Card auxC = NULL;
     //Main loop que faz decorrer o jogo
     while (r && lives != 0){
-        
-        if (ultimasJ > 0){
-            ultimasJ--;
-        }
 
         if ((nc == 0 && ultimasJ == -1)){
             if (getExp(log, 0)[0] == 'C'){
@@ -233,6 +229,9 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                         gotoxy(0, 24);
                         printf("Você não tem dicas para dar!!!");
                     }
+                    if (ultimasJ > 0){
+                        ultimasJ--;
+                    }
                     break;
                 }
                 case '2':{//Jogar uma carta
@@ -333,6 +332,9 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                         }
                         ShowCardAI(deckM, trash, ai, jog, pi, log, lives, tips, nc, nt, np);
                     }
+                    if (ultimasJ > 0){
+                        ultimasJ--;
+                    }
                     break;
                 }
                 case '3':{//Descartar uma carta
@@ -415,6 +417,9 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                         printf("                                                                                                  ");
                         gotoxy(0, 24);
                         printf("Você não pode descartar cartas!!! Tem de ter menos de 8 dicas para poder descartar uma carta.");
+                    }
+                    if (ultimasJ > 0){
+                        ultimasJ--;
                     }
                     break;
                 }
