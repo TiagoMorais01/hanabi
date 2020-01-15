@@ -17,6 +17,18 @@
 #include "Save.h"
 #define gotoxy(x,y) printf("\033[%d;%dH", (y) , (x))
 
+void delay(int number_of_seconds){
+    // Converting time into milli_seconds 
+    int milli_seconds = 1000 * number_of_seconds; 
+  
+    // Storing start time 
+    clock_t start_time = clock(); 
+  
+    // looping till required time is not achieved 
+    while (clock() < start_time + milli_seconds) 
+        ;
+}
+
 void pontuacao(int np, int lives){
     int h,w;
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
