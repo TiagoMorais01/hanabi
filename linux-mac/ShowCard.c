@@ -31,10 +31,10 @@ void setColor(char c){
             printf("\033[0;31m");
             break;
         case 'W':
-            printf("\033[0;31m");
+            printf("\033[0m");
             break;
         case 'C':
-            printf("\033[100m");
+            printf("\033[90m");
             break;
         default:
             printf("\033[0m");
@@ -166,7 +166,6 @@ void adjustString(int w, int *k, char *exp){
 void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], int lives, int tips , int nc, int nt, int np){
 
     int w, h;
-    int col,row;
     int i = 0;
     //Vê se é windows para obter o tamanho da janelas das librarias corretas
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -174,8 +173,8 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         row = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
         w = csbi.dwSize.X;
-        //col = csbi.srWindow.Right - csbi.srWindow.Left + 1; 
-        //row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+        int col = csbi.srWindow.Right - csbi.srWindow.Left + 1; 
+        int row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
     //senao e linux/mac
     #else
         system("clear");
@@ -189,12 +188,14 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     int tamNai = tamNpl(ai);
     int tamNjog = tamNpl(jog);
     
+    setColor('C');
     //Desenhar uma carta para o Deck
     if(nc > 0)
         drawCard(0,1,nc);
     else
         drawCardI(0, 1, 0, 1);
     
+    setColor('W');
     //Escrever o nome da AI
     gotoxy((w/2) + (tamNai/2)-11,3);
     printf("%s", getnome(ai));
@@ -222,8 +223,6 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
             printf(" %lc", 0x2665);
     #endif
 
-    setColor('G');
-    
     //Mão Gervásio(AI)
     for (i = 0; i < getNCP(ai); i++){
         setColor(getCc(getCard(ai, i)));
@@ -231,6 +230,7 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
         printf("%d",getCvc(getCard(ai, i)));
         drawCard((w/2)-6*2+i*8-10, 5, getCnum(getCard(ai, i)));
     }
+    setColor('C');
     
     //Jogo(Pilha)
     int ac = 0;
@@ -288,7 +288,7 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     }
 
     //Jogadas
-    setColor('G');
+    setColor('W');
     char *tmpLog[3];
     for (i = 0; i < 3; i++){
         tmpLog[i] = (char*) malloc(200);
@@ -330,11 +330,12 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
             break;
     }
 
+    setColor('C');
     //Mão player
     for (i = 0; i < getNCP(jog); i++){
         if (getCard(jog, i) != NULL){
             selColor(jog, i);
-            if(getCvn(getCard(jog, i))){//Um if para verificar se o numero da carta está visível para imprimir ou não
+            if(getCvn(getCard(jog, i))){//Verifica se o numero da carta está visível para imprimir ou não
                 drawCardP((w/2)-6*2+i*8-10, 13, getCnum(getCard(jog, i)));
             }
             else{
@@ -344,7 +345,7 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
     }
 
     //Atribui a cor branca e imprime as posições de cada respetiva carta
-    setColor('G');
+    setColor('W');
     gotoxy((w/2)-6*2-11,15);
     for (i = 0; i < getNCP(jog); i++){
         printf("   (%d)  ", i+1);
@@ -360,5 +361,6 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
         printf("%s", getnome(jog));
     }
     printf("\n");
+    setColor('W');
     return;
 }
