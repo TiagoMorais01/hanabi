@@ -483,12 +483,13 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
                         r = 0;
                     }
                     break;
-                default:
+                default:{
                     gotoxy(0, 24);
                     printf("                                                                                                  ");
                     gotoxy(0, 24);
                     printf("A opção que escolheu não existe!!!");
                     break;
+                }
             }
         }
         else{//Vez da AI
