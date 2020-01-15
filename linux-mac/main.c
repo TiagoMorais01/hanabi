@@ -494,7 +494,7 @@ void init(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], in
     if (ultimasJ == 0 || !lives){
         FILE* f;
         if ((f = fopen("save.ha", "r")) != NULL){
-            if (remove("save.ha") == 0)
+            if (remove("save.ha") != 0)
                 perror("Erro ");
             fclose(f);
         }
