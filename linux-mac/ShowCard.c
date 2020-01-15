@@ -141,6 +141,7 @@ void drawTrash(int x, int y, Card c){
     gotoxy(x, y+2);    
 }
 
+//Função para ajustar uma string ao tamanho do ecrã
 void adjustString(int w, int *k, char *exp){
     int i = 0;
     int j = (w -((w/2)+6*2+8) + 1);
@@ -165,7 +166,7 @@ void adjustString(int w, int *k, char *exp){
 //Função responsável por desenhar a mesa de jogo(obtem: O Deck, a lixeira, o jogador e a ai, a pilha, o numero de vidas, as dicas, o numero de cartas no dekc, na lixeira e na pilha)
 void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log[], int lives, int tips , int nc, int nt, int np){
 
-    int w, h;
+    int w;
     int i = 0;
     //Vê se é windows para obter o tamanho da janelas das librarias corretas
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -173,15 +174,13 @@ void ShowCardAI(Deck deckM, Deck trash, Player ai, Player jog, Pilha pi, Log log
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         row = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
         w = csbi.dwSize.X;
-        int col = csbi.srWindow.Right - csbi.srWindow.Left + 1; 
-        int row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+        int col = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     //senao e linux/mac
     #else
         system("clear");
         struct winsize size;
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
         w = size.ws_col;
-        h = size.ws_row;
         //xdotool windowsize $WINDOW_ID_GOES_HERE $WIDTH $HEIGHT
     #endif
 

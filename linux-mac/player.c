@@ -32,6 +32,7 @@ Card getCard(Player p, int i){
     return p->cards[i];
 }
 
+//Função para obter as cartas do jogador
 Card* getCards(Player p){
     return p->cards;
 }
@@ -230,7 +231,7 @@ int getNCP(Player p){
     return p->ncards;
 }
 
-//
+//Função para obter a menor carta do jogador sem que o jogador não informação
 int getLowerCard(Player p){
     int i = 0;
     int min = -1;

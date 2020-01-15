@@ -113,6 +113,7 @@ int checkChar(char c, char arr[], int n){
     return v;
 }
 
+//Função para encontrar uma carta na pilha
 int findCpilha(int n, char c, Pilha pi, int np){
     int i = 0;
     for (i = 0; ((i < np) && ((pi->pilha[i]->color != c) || (pi->pilha[i]->num != n))); i++);
@@ -124,6 +125,7 @@ int compareCardC(Card c1, Card c2){
     return (c1->color == c2->color) ? 1 : 0;
 }
 
+//Função para comparar duas cartas
 int compareCardN(Card c1, Card c2){
     return (c1->num + 1 == c2->num) ? 1 : 0;
 }
@@ -176,6 +178,7 @@ void getTopCpilha(Pilha pi, int *PCards, int np){
     }
 }
 
+//Função para atribuir uma posição a uma carta
 void setCpos(Card c, int i){
     c->pos = i;
 }
