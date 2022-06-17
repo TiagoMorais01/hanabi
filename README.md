@@ -18,4 +18,4 @@ This project is based on a university project by [UTAD](https://www.utad.pt) - U
 * **Tomás Silva** - *ALL work* - [TomDev03](https://github.com/TomDev03)
 * **Tiago Morais** - *ALL work* - [TiagoMorais01](https://github.com/TiagoMorais01)
 
-See also the list of [contributors](https://github.com/Def4ult03/hanabi/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/TomDev03/hanabi/graphs/contributors) who participated in this project.
