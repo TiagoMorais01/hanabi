@@ -1,0 +1,27 @@
+{
+  "version": "2.2.0",
+  "summary": {
+    "title": "Test",
+    "owner": "Tiago",
+    "description": "Hanabi (from Japanese 花火, fireworks) is a cooperative card game created by French game designer Antoine Bauza and published in 2010.[1] Players are aware of other players' cards but not their own, and attempt to play a series of cards in a specific order to set off a simulated fireworks show. The types of information that players may give to each other is limited, as is the total amount of information that can be given during the game. Was Coded in C language.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "Test",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.2.0",
+        "cells": [],
+        "description": "Stride diagram of the system description"
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "Tiago",
+    "threatTop": 0
+  }
+}
